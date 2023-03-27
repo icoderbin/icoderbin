@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>直播技术体系介绍 | iCoder 的小站</title><meta name="author" content="iCoder"><meta name="copyright" content="iCoder"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="搭建一个直播系统，会遇到非常多的技术难点，因为会牵涉到很多音视频相关的比较专业的知识。比如说音视频采集、图像处理、音视频编解码，美颜滤镜等。目前牵涉到音视频系统客户端开发的知识非常分散，初学者在刚刚接触的时候容易头昏脑涨理不清头绪，从而导致音视频学习的周期很长。所以在这里以一系列文章来对整个直播技术"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://zwbin.gitee.io/2021/10/29/%E9%9F%B3%E8%A7%86%E9%A2%91/%E7%9B%B4%E6%92%AD%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E4%BB%8B%E7%BB%8D/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '直播技术体系介绍',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-29 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/pic.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">46</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="iCoder 的小站"><span class="site-name">iCoder 的小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">直播技术体系介绍</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-10-28T16:00:00.000Z" title="发表于 2021-10-29 00:00:00">2021-10-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91/%E7%9B%B4%E6%92%AD%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E4%BB%8B%E7%BB%8D/">直播技术体系介绍</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>搭建一个直播系统，会遇到非常多的技术难点，因为会牵涉到很多音视频相关的比较专业的知识。比如说音视频采集、图像处理、音视频编解码，美颜滤镜等。目前牵涉到音视频系统客户端开发的知识非常分散，初学者在刚刚接触的时候容易头昏脑涨理不清头绪，从而导致音视频学习的周期很长。所以在这里以一系列文章来对整个直播技术体系进行一下介绍。</p>
+<p>直播实际上就是在主播端收集主播的音频和视频素材，然后经过一系列的加工，把数据传递给观众端，然后观众端再将加工后的数据进行还原并播放的过程。下面看一下直播系统的整体流程图。</p>
+<p><img src="/2021/10/29/%E9%9F%B3%E8%A7%86%E9%A2%91/%E7%9B%B4%E6%92%AD%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E4%BB%8B%E7%BB%8D/image1.jpg"></p>
+<p>直播系统运行可以大致分为以下十个步骤，对应图中的十个过程。</p>
+<ul>
+<li>第一步：数据采集。主播端通过摄像头进行图像流采集，获取到图像流原始数据；通过录音设备进行音频采集，获取到原始音频数据。</li>
+<li>第二步：数据编辑。在录音的过程中可能存在噪音，比如说主播端在播放音乐，音乐的声音和主播的声音会同时被录上，需要过滤掉设备自己播放的那些声音，来保证录音质量。图像的原始数据可能需要加一些滤镜、美颜等一些好玩的表情，那么就需要在原始图像流数据上进行编辑</li>
+<li>第三步：音视频编码。因为原始图像流数据和原始音频数据占用空间太大，直接通过网络传播太占用带宽，所以需要通过编码器对原始音频数据和原始图像流数据进行编码压缩，生成编码后的音频数据和视频数据。</li>
+<li>第四步：音视频封装。需要将编码后的音频数据和视频数据按照一定的格式合成一个文件，并在这个文件中带上音视频的各个参数。这个过程叫做封装。</li>
+<li>第五步：推流。数据封装好以后需要根据某个网络传输流媒体协议（例如RTMP）将数据推送到服务端。将封装好的数据进行流媒体格式转换，并推送到服务端，这个过程称之为推流。</li>
+<li>第六步：拉流。服务端接收到主播推上来的音视频数据后，需要通过某个网络传输流媒体协议将数据发送到观众端。将拉取到的数据进行流媒体格式转换，生成在主播端封装的数据，这个过程称之为拉流。</li>
+<li>第七步：音视频解封装。获取到的封装数据需要根据封装格式解封装，分别生成音频编码后的数据和视频编码后的数据。</li>
+<li>第八步：音视频解码。通过解码器分别将上一步获取的音频编码数据和视频的编码数据解码，生成原始的音频数据和视频数据。</li>
+<li>第九步：音视频同步。对音频和视频进行时间同步，保证音频和视频在播放的时候能够对应上。在播放视频的时候有时候可能出现声音和嘴型不对，就是因为音视频同步做的不好。音视频同步做不好很影响用户体验。</li>
+<li>第十步：播放。将原始音频数据发送给音频播放器进行播放，将视频原始数据发送给GPU进行渲染。</li>
+</ul>
+<p>以上的十个步骤完成，就完成了直播系统观众端和主播端的整体系统搭建。我们可以发现，在观众端和主播端的两个流程基本上是相反的。主播端进行采集，观众端进行播放；主播端进行编码，观众端进行解码；主播端进行封装，观众端进行解封装；主播端进行推流，观众端进行拉流。</p>
+<p>这些步骤都牵涉到哪些相关的技术呢？我们先做一个简单的预览，有一个大概印象，详细的内容在后续一系列的文章中会进行详细说明：</p>
+<h2 id="音频录制和摄像头图像采集"><a href="#音频录制和摄像头图像采集" class="headerlink" title="音频录制和摄像头图像采集"></a>音频录制和摄像头图像采集</h2><p>直播的时候需要采集主播的音频和图像，所以牵涉到操作Android录制的API和操作Android摄像头的API。</p>
+<ul>
+<li>AudioRecord： Android音频录制API，通过它实现音频录制，生成原始音频数据（PCM格式)。</li>
+<li>Camera API： 较旧的相机操作API，实现图像流采集。</li>
+<li>camera2 API : 新的相机操作API，实现图像流采集。</li>
+<li>PCM音频数据格式。</li>
+<li>YUV视频数据格式。</li>
+<li>RGB数据格式。</li>
+</ul>
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><p>主播端采集到视频格式以后，需要在屏幕上显示出来，这称之为视频预览。视频的预览可以使用多种方式进行。</p>
+<ul>
+<li>SurfaceView 的使用。</li>
+<li>GLSurfaceView 的使用。</li>
+<li>SurfaceTexture 的使用。</li>
+<li>TextureView 的使用。</li>
+<li>OpenGL 的使用。</li>
+<li>EGL</li>
+</ul>
+<h2 id="音频数据编辑和视频数据编辑"><a href="#音频数据编辑和视频数据编辑" class="headerlink" title="音频数据编辑和视频数据编辑"></a>音频数据编辑和视频数据编辑</h2><p>需要对音频数据进行滤波，需要对视频数据添加滤镜、美颜等功能。</p>
+<ul>
+<li>OpenGL 的使用</li>
+<li>FBO 的使用</li>
+</ul>
+<h2 id="音视频的编码和解码"><a href="#音视频的编码和解码" class="headerlink" title="音视频的编码和解码"></a>音视频的编码和解码</h2><p>在主播端需要对音视频原始数据进行编码，在观众端需要对编码的数据进行解码。编解码分为硬编解码和软编解码。</p>
+<ul>
+<li>硬编解码： 使用GPU进行编解码，速度快，但兼容性不好。</li>
+<li>软编解码： 使用CPU进行编解码，速度较慢，但兼容性好。</li>
+</ul>
+<p>涉及到的知识：</p>
+<ul>
+<li>使用 MediaCodec进行硬编解码</li>
+<li>FFmpeg软编解码</li>
+<li>视频编码格式：H.264、MPEG4、MPEG2等</li>
+<li>音频编码格式：AAC、MP3、WMA 等</li>
+</ul>
+<h2 id="封装和解封装"><a href="#封装和解封装" class="headerlink" title="封装和解封装"></a>封装和解封装</h2><p>对于封装和解封装，既可以做在Java层，也可以做在native层。</p>
+<ul>
+<li>MediaMuxer 在Java层封装和解封装</li>
+<li>FFmpeg 在native层进行封装和解封装</li>
+<li>封装格式：AVI、MP4、FLV、TS、RMVB、MKV 等</li>
+</ul>
+<h2 id="推流和拉流"><a href="#推流和拉流" class="headerlink" title="推流和拉流"></a>推流和拉流</h2><p>拉流和推流的协议是应用层协议，互联网直播一般是简历在TCP协议之上的。拉流和推流的过程也是既可以在Java层实现，也可以在native层实现。</p>
+<ul>
+<li>RTMP 流协议</li>
+<li>Java层实现推流</li>
+<li>FFmpeg进行推流</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://zwbin.gitee.io">iCoder</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://zwbin.gitee.io/2021/10/29/%E9%9F%B3%E8%A7%86%E9%A2%91/%E7%9B%B4%E6%92%AD%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E4%BB%8B%E7%BB%8D/">http://zwbin.gitee.io/2021/10/29/%E9%9F%B3%E8%A7%86%E9%A2%91/%E7%9B%B4%E6%92%AD%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E4%BB%8B%E7%BB%8D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://zwbin.gitee.io" target="_blank">iCoder 的小站</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/11/01/%E9%9F%B3%E8%A7%86%E9%A2%91/Camera2%E4%BD%BF%E7%94%A8ImageReader%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E6%B5%81/" title="Camera2使用ImageReader获取视频流"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Camera2使用ImageReader获取视频流</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/29/%E9%9F%B3%E8%A7%86%E9%A2%91/Camera2%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Camera2基本使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Camera2基本使用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/11/01/%E9%9F%B3%E8%A7%86%E9%A2%91/Camera2%E4%BD%BF%E7%94%A8ImageReader%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E6%B5%81/" title="Camera2使用ImageReader获取视频流"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">Camera2使用ImageReader获取视频流</div></div></a></div><div><a href="/2021/10/13/%E9%9F%B3%E8%A7%86%E9%A2%91/CameraAPI%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Camera API基本使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-13</div><div class="title">Camera API基本使用</div></div></a></div><div><a href="/2021/10/29/%E9%9F%B3%E8%A7%86%E9%A2%91/Camera2%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="Camera2基本使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-29</div><div class="title">Camera2基本使用</div></div></a></div><div><a href="/2021/11/02/%E9%9F%B3%E8%A7%86%E9%A2%91/YUV%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="YUV数据格式介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-02</div><div class="title">YUV数据格式介绍</div></div></a></div><div><a href="/2021/11/10/%E9%9F%B3%E8%A7%86%E9%A2%91/%E4%BD%BF%E7%94%A8TextureView%E9%A2%84%E8%A7%88%E7%94%BB%E9%9D%A2/" title="使用TextureView预览画面"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-10</div><div class="title">使用TextureView预览画面</div></div></a></div><div><a href="/2021/11/15/%E9%9F%B3%E8%A7%86%E9%A2%91/%E4%BD%BF%E7%94%A8SurfaceView%E5%92%8Cegl%E8%BF%9B%E8%A1%8C%E9%A2%84%E8%A7%88%E5%92%8C%E5%BD%95%E5%88%B6%E8%A7%86%E9%A2%91/" title="使用SurfaceView和EGL进行预览和录制视频"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-15</div><div class="title">使用SurfaceView和EGL进行预览和录制视频</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9F%B3%E9%A2%91%E5%BD%95%E5%88%B6%E5%92%8C%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E9%87%87%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">音频录制和摄像头图像采集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text">预览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E7%BC%96%E8%BE%91%E5%92%8C%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE%E7%BC%96%E8%BE%91"><span class="toc-number">3.</span> <span class="toc-text">音频数据编辑和视频数据编辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91%E7%9A%84%E7%BC%96%E7%A0%81%E5%92%8C%E8%A7%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">音视频的编码和解码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E5%92%8C%E8%A7%A3%E5%B0%81%E8%A3%85"><span class="toc-number">5.</span> <span class="toc-text">封装和解封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E6%B5%81%E5%92%8C%E6%8B%89%E6%B5%81"><span class="toc-number">6.</span> <span class="toc-text">推流和拉流</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2023 By iCoder</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div></div></body></html>
