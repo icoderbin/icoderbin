@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>可观察数据存储器LiveData | iCoder 的小站</title><meta name="author" content="iCoder"><meta name="copyright" content="iCoder"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="LiveData是一种可观察数据存储器类，也就是说可以为它的实例对象绑定观察者。且LiveData拥有生命周期的感知能力，即能够感知到Activity、Fragment等的生命周期，当观察者的生命周期处于活跃状态时，LiveData值的修改才会去通知到该观察者。 根据官方文档的介绍，LiveData"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://icoderbin.github.io/10338.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '可观察数据存储器LiveData',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-24 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/pic.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">53</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="iCoder 的小站"><span class="site-name">iCoder 的小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">可观察数据存储器LiveData</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-03-23T16:00:00.000Z" title="发表于 2021-03-24 00:00:00">2021-03-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Jetpack/">Jetpack</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Jetpack/%E5%8F%AF%E8%A7%82%E5%AF%9F%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%99%A8LiveData/">可观察数据存储器LiveData</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span></span></div></div></div><article class="post-content" id="article-container"><p>LiveData是一种可观察数据存储器类，也就是说可以为它的实例对象绑定观察者。且LiveData拥有生命周期的感知能力，即能够感知到Activity、Fragment等的生命周期，当观察者的生命周期处于活跃状态时，LiveData值的修改才会去通知到该观察者。</p>
+<p>根据官方文档的介绍，LiveData存在以下优势：</p>
+<ul>
+<li>确保界面符合数据状态：即LiveData绑定观察者以后，自己值的更新会直接通知到所有的观察者，不需要用户去触发什么。</li>
+<li>不会发生内存泄漏：观察者绑定到LifeCycle对象上，当LifeCycle销毁后，LiveData会进行自我清理。Activity和Fragment都实现了LifeCycle。</li>
+<li>不会因Activity的停止而导致崩溃。在以往的开发方式下，比如说Activity切换到后台，假如这个时候网络数据返回，需要弹出一个弹框，这个时候就会崩溃，因为Dialog必须要在Activity处于活跃状态的时候才能弹出，正确的做法就是弹出弹框前判断一下Activity的活跃状态。但是对于LiveData来说，当它绑定的LifeCycle处于非活跃状态时，即便数据到来，也不会触发更新数据修改事件，自然也就不会弹框。</li>
+<li>不需要手动处理生命周期。即如上面Dialog弹框说的，弹框之前不需要校验Activity的生命周期状态。</li>
+<li>数据始终保持最新状态。还是上面Dialog的例子，当Activity在后台时获取到数据时不会去通知，当生命周期变成活跃状态时，就会及时更新到最新的数据。</li>
+<li>适当的配置更改，如果由于配置更改，比如说设备旋转等重新创建了Activity或者Fragment，那么他就会立刻接收最新的可用数据。</li>
+<li>共享资源:可以使用单例模式扩展 LiveData 对象以封装系统服务，以便在应用中共享它们。LiveData 对象连接到系统服务一次，然后需要相应资源的任何观察者只需观察 LiveData 对象。</li>
+</ul>
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><p>下面先看一下LiveData的基本使用。LiveData往往会写在ViewModel类中，关于ViewModel的使用可以参考<a target="_blank" rel="noopener" href="https://zwbin.gitee.io/categories/">Jetpack-&gt;架构组件ViewModel</a>。</p>
+<p>首先添加ViewModel的两个依赖，ViewModel在其他文章中会有所介绍。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">&quot;androidx.fragment:fragment-ktx:1.3.4&quot;</span></span><br><span class="line">implementation <span class="string">&quot;androidx.activity:activity-ktx:1.2.3&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新建一个ViewModel</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CustomViewModel</span>: <span class="type">ViewModel</span>() &#123;</span><br><span class="line">    <span class="keyword">val</span> hasClicked: MutableLiveData&lt;<span class="built_in">Boolean</span>&gt; <span class="keyword">by</span> lazy &#123;</span><br><span class="line">        MutableLiveData&lt;<span class="built_in">Boolean</span>&gt;()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Activity中进行简单的使用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> button: Button</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> viewModel: CustomViewModel <span class="keyword">by</span> viewModels()</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        button = findViewById(R.id.button)</span><br><span class="line">        button.setOnClickListener &#123;</span><br><span class="line">            viewModel.hasClicked.value = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onResume()</span><br><span class="line">		<span class="comment">// 第一个参数是绑定lifeCycle，通过这个LifeCycle来确定这次观察者的活跃状态</span></span><br><span class="line">        viewModel.hasClicked.observe(<span class="keyword">this</span>,</span><br><span class="line">            Observer&lt;<span class="built_in">Boolean</span>&gt; &#123;</span><br><span class="line">                button.isEnabled = <span class="literal">false</span></span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码运行起来后发现，当点击按钮后，按钮就会变为置灰状态不可点击了。然后进行横竖屏切换的时候，会发现不可点击状态在切换后会保持。而下面的代码就不行,这是因为在横竖屏切换的时候Activity进行了销毁重建，hasClicked 变量的值丢失了。如果想要在重建Activity的时候恢复hasClicked,那么就需要在onSaveInstanceState进行状态的存储，然后重建后恢复。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> button: Button</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> hasClicked = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        button = findViewById(R.id.button)</span><br><span class="line">        button.setOnClickListener &#123;</span><br><span class="line">            hasClicked = <span class="literal">true</span></span><br><span class="line">            button.isEnabled = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onResume()</span><br><span class="line">        <span class="keyword">if</span> (hasClicked) &#123;</span><br><span class="line">            button.isEnabled = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个示例体现出了LiveData的以下几个优势：</p>
+<ul>
+<li>保界面符合数据状态。</li>
+<li>适当的配置更改能够保持最新的可用数据。</li>
+</ul>
+<h1 id="验证活跃状态"><a href="#验证活跃状态" class="headerlink" title="验证活跃状态"></a>验证活跃状态</h1><p>下面实验一下LiveData的另一些优势，看如下的代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> button: Button</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> viewModel: CustomViewModel <span class="keyword">by</span> viewModels()</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        button = findViewById(R.id.button)</span><br><span class="line">        button.setOnClickListener &#123;</span><br><span class="line">			<span class="comment">// 延迟5s</span></span><br><span class="line">            Handler(Looper.myLooper()!!).postDelayed(&#123;</span><br><span class="line">                viewModel.hasClicked.value = <span class="literal">true</span></span><br><span class="line">            &#125;, <span class="number">5000</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        viewModel.hasClicked.observe(<span class="keyword">this</span>,</span><br><span class="line">            Observer&lt;<span class="built_in">Boolean</span>&gt; &#123;</span><br><span class="line">                Log.i(<span class="string">&quot;MainActivity&quot;</span>, <span class="string">&quot;hasClicked-changed&quot;</span>)</span><br><span class="line">                button.isEnabled = <span class="literal">false</span></span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在代码中，点击事件后对viewModel.hasClicked的值的设置延迟了5s，如果Activity一直保持在前台，那么5s以后按钮变成了不可用状态，且”hasClicked-changed”打印输出。</p>
+<p>但是如果在这5s之间按home键将Activity切换到后台后，发现在后台状态下”hasClicked-changed”是不会打印的，然后再将Activity切换到前台后，”hasClicked-changed”就会打印输出且按钮变为不可用的状态。</p>
+<p>这就是LiveData的优势，自动感应Activity的生命周期，当Activity为不活跃状态时，就算修改了LiveData的值，那也不会通知Observer，而是等到当Activity再次进入活跃状态的时候才会去触发通知。</p>
+<p>这个例子中体现了LiveData的以下优势：</p>
+<ul>
+<li>不会因为Activity的停止而导致崩溃。</li>
+<li>不需要手动处理生命周期。</li>
+<li>数据始终保持在最新状态。</li>
+</ul>
+<blockquote>
+<p>上文中一直重复说的活跃状态是指生命周期处于 STARTED 或 RESUMED 状态，则 LiveData 会认为该观察者处于活跃状态。</p>
+</blockquote>
+<h1 id="扩展LiveData"><a href="#扩展LiveData" class="headerlink" title="扩展LiveData"></a>扩展LiveData</h1><p>当LiveData 在活跃状态和不活跃状态之间相互切换时会有相应的回调。所以我们可以在自定义LiveData的时候实现这些回调。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">StockLiveData</span>(symbol: String) : LiveData&lt;BigDecimal&gt;() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> stockManager = StockManager(symbol)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> listener = &#123; price: BigDecimal -&gt;</span><br><span class="line">        value = price</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActive</span><span class="params">()</span></span> &#123;</span><br><span class="line">        stockManager.requestPriceUpdates(listener)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onInactive</span><span class="params">()</span></span> &#123;</span><br><span class="line">        stockManager.removeUpdates(listener)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上代码所示，当LiveData 没有活跃的观察者时，会调用onInactive(),当具有活跃的调用者时，会调用onActive() 。</p>
+<p>LiveData是可以绑定多个观察者的，而这多个观察者是可以绑定多个LifeCycle的。比如说当两个Fragment共享一个LiveData的时候，只有在两个Fragment都变成不活跃状态时，onInactive()才会调用。而两个Fragment都处于不活跃状态时，其中一个变为活跃状态，那么onActive()就会调用。</p>
+<blockquote>
+<p>也就是说LiveData相当于是数据的生产者，当所有的数据消费者都处于不活跃状态时会调用onInactive()。然后突然存在一个或多个活跃的数据消费者时，就会调用onActive()变成激活状态。</p>
+</blockquote>
+<h1 id="转换LiveData"><a href="#转换LiveData" class="headerlink" title="转换LiveData"></a>转换LiveData</h1><p>可以使用Transformations来将LiveData对象分配给观察者之前进行值的修改，或者可以根据另一个实例的值返回不同的LiveData。</p>
+<h2 id="Transformations-map"><a href="#Transformations-map" class="headerlink" title="Transformations.map()"></a>Transformations.map()</h2><p>对存储在LiveData对象中的值应用函数，然后将结果传给下游。我们看一下一个简单的示例。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CustomViewModel</span>: <span class="type">ViewModel</span>() &#123;</span><br><span class="line">    <span class="keyword">val</span> hasClicked: MutableLiveData&lt;<span class="built_in">Boolean</span>&gt; <span class="keyword">by</span> lazy &#123;</span><br><span class="line">        MutableLiveData&lt;<span class="built_in">Boolean</span>&gt;()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> logClicked:LiveData&lt;String&gt; = Transformations.map(hasClicked) &#123;</span><br><span class="line">        <span class="keyword">if</span>(it) <span class="string">&quot;isTrue&quot;</span> <span class="keyword">else</span> <span class="string">&quot;isFalse&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> button: Button</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> viewModel: CustomViewModel <span class="keyword">by</span> viewModels()</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> TAG = <span class="string">&quot;zwbin&quot;</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        button = findViewById(R.id.button)</span><br><span class="line">        button.setOnClickListener &#123;</span><br><span class="line">            viewModel.hasClicked.value = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        viewModel.hasClicked.observe(<span class="keyword">this</span>,</span><br><span class="line">            Observer&lt;<span class="built_in">Boolean</span>&gt; &#123;</span><br><span class="line">                Log.i(TAG, <span class="string">&quot;hasClicked-changed&quot;</span>)</span><br><span class="line">                button.isEnabled = <span class="literal">false</span></span><br><span class="line">            &#125;)</span><br><span class="line">        viewModel.logClicked.observe(<span class="keyword">this</span>, Observer &#123;</span><br><span class="line">            Log.i(TAG, <span class="string">&quot;userLiveData=<span class="subst">$&#123;it&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上代码所示，当点击按钮时，会修改viewModel.hasClicked的值。在CustomViewModel 中通过Transformations.map()生成了logClicked。这个时候hasClicked 的修改会通过map函数进行一下变换，然后将值传给logClicked,然后logClicked 的观察者会收到通知。</p>
+<p>如下为点击按钮后代码的打印结果:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hasClicked-changed</span><br><span class="line">userLiveData=isTrue</span><br></pre></td></tr></table></figure>
+
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>简单看一下Transformations.map()的原理,看map()方法的代码，在方法中新建了MediatorLiveData，并返回，然后给MediatorLiveData 添加了一个回调监听。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> static &lt;X, Y&gt; LiveData&lt;Y&gt; map(</span><br><span class="line">		<span class="meta">@NonNull</span> LiveData&lt;X&gt; source,</span><br><span class="line">		<span class="meta">@NonNull</span> <span class="keyword">final</span> Function&lt;X, Y&gt; mapFunction) &#123;</span><br><span class="line">	<span class="keyword">final</span> MediatorLiveData&lt;Y&gt; result = new MediatorLiveData&lt;&gt;();</span><br><span class="line">	result.addSource(source, new Observer&lt;X&gt;() &#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="keyword">public</span> void onChanged(<span class="meta">@Nullable</span> X x) &#123;</span><br><span class="line">			result.setValue(mapFunction.apply(x));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看一下MediatorLiveData 的代码。 MediatorLiveData 继承自MutableLiveData，内部维护了SafeIterableMap&lt;LiveData<?>, Source<?>&gt;类型的 键值对，在上面map()代码中通过addSource()向其中添加回调。</p>
+<p>我们从map()的代码中可以看到，source作为源数据被添加到了MutableLiveData中，而添加的过程中实际上也给source添加了一个观察者，这个观察者就是addSource的另一个参数new Observer<X>()。也就是说，当source的数据发生变化时，会回调这个观察者的方法，然后通过mapFunction.apply()生效map的调用，然后将值设置给MediatorLiveData。如果MediatorLiveData 在外部有观察者的话，自然会回调到对应的观察者。</X></p>
+<h2 id="Transformations-switchMap"><a href="#Transformations-switchMap" class="headerlink" title="Transformations.switchMap()"></a>Transformations.switchMap()</h2><p>Transformations.switchMap() 的使用相对比较复杂一点。看下面map()和switchMap()对比看一下区别。</p>
+<p>使用map()：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">LiveData</span> <span class="variable">userLiveData</span> <span class="operator">=</span> ...;</span><br><span class="line"><span class="type">LiveData</span> <span class="variable">userName</span> <span class="operator">=</span> Transformations.map(userLiveData, user -&gt; &#123;</span><br><span class="line">     <span class="keyword">return</span> user.firstName + <span class="string">&quot; &quot;</span> + user.lastName; <span class="comment">// 返回一个字符串</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如上所示，userLiveData 作为用户信息，当它的内容发生变化时，userName的内容会跟着变化，传入map的转换函数返回的是String字符串。</p>
+<p>使用switchMap():</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">MutableLiveData</span> <span class="variable">userIdLiveData</span> <span class="operator">=</span> ...;</span><br><span class="line"><span class="type">LiveData</span> <span class="variable">userLiveData</span> <span class="operator">=</span> Transformations.switchMap(userIdLiveData, id -&gt;</span><br><span class="line">    repository.getUserById(id)); <span class="comment">// 返回 LiveData</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">setUserId</span><span class="params">(String userId)</span> &#123;</span><br><span class="line">     <span class="built_in">this</span>.userIdLiveData.setValue(userId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的转换函数返回的是LiveData类型。通过switchMap() 是可以做一些延迟操作的。比如说上面的例子，userId改变以后需要去查询User信息，这个User信息有可能需要网络请求，也有可能需要读取本地数据库。那么这个时间就是一个耗时操作。这个时候，可以先在getUserById中返回一个LiveData，然后当网络数据或者读取本地库的数据返回后，再更新这个LiveData。这个时候，这个LiveData更新后，会将数据同步到userLiveData中。</p>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>switchMap 的原理和map的原理是比较类似的，在新生成的LiveData后，就会添加这个LiveData的观察者，然后在观察者回调中更新外部的LiveData。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="keyword">public</span> static &lt;X, Y&gt; LiveData&lt;Y&gt; switchMap(</span><br><span class="line">		<span class="meta">@NonNull</span> LiveData&lt;X&gt; source,</span><br><span class="line">		<span class="meta">@NonNull</span> <span class="keyword">final</span> Function&lt;X, LiveData&lt;Y&gt;&gt; switchMapFunction) &#123;</span><br><span class="line">	<span class="keyword">final</span> MediatorLiveData&lt;Y&gt; result = new MediatorLiveData&lt;&gt;();</span><br><span class="line">	result.addSource(source, new Observer&lt;X&gt;() &#123;</span><br><span class="line">		LiveData&lt;Y&gt; mSource;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="keyword">public</span> void onChanged(<span class="meta">@Nullable</span> X x) &#123;</span><br><span class="line">			LiveData&lt;Y&gt; newLiveData = switchMapFunction.apply(x);</span><br><span class="line">			<span class="keyword">if</span> (mSource == newLiveData) &#123;</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (mSource != <span class="literal">null</span>) &#123;</span><br><span class="line">				result.removeSource(mSource);</span><br><span class="line">			&#125;</span><br><span class="line">			mSource = newLiveData;</span><br><span class="line">			<span class="keyword">if</span> (mSource != <span class="literal">null</span>) &#123;</span><br><span class="line">				result.addSource(mSource, new Observer&lt;Y&gt;() &#123;</span><br><span class="line">					<span class="meta">@Override</span></span><br><span class="line">					<span class="keyword">public</span> void onChanged(<span class="meta">@Nullable</span> Y y) &#123;</span><br><span class="line">						result.setValue(y);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义转换"><a href="#自定义转换" class="headerlink" title="自定义转换"></a>自定义转换</h2><p>可以通过MediatorLiveData 来自定义很多类型的转换，这些转换都可以参考map和switchmap的实现原理进行。RxJava中的一些转换的功能可以作为参考。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.android.google.cn/topic/libraries/architecture/livedata">LiveData 概览</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io">iCoder</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io/10338.html">https://icoderbin.github.io/10338.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://icoderbin.github.io" target="_blank">iCoder 的小站</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/11956.html" title="在项目中添加c和c++"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">在项目中添加c和c++</div></div></a></div><div class="next-post pull-right"><a href="/30794.html" title="生命周期感知组件Lifecycle"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">生命周期感知组件Lifecycle</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/30794.html" title="生命周期感知组件Lifecycle"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-23</div><div class="title">生命周期感知组件Lifecycle</div></div></a></div><div><a href="/22649.html" title="状态容器ViewModel"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-22</div><div class="title">状态容器ViewModel</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%B4%BB%E8%B7%83%E7%8A%B6%E6%80%81"><span class="toc-number">2.</span> <span class="toc-text">验证活跃状态</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%A9%E5%B1%95LiveData"><span class="toc-number">3.</span> <span class="toc-text">扩展LiveData</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2LiveData"><span class="toc-number">4.</span> <span class="toc-text">转换LiveData</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformations-map"><span class="toc-number">4.1.</span> <span class="toc-text">Transformations.map()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">4.1.1.</span> <span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformations-switchMap"><span class="toc-number">4.2.</span> <span class="toc-text">Transformations.switchMap()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.3.</span> <span class="toc-text">自定义转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-number">5.</span> <span class="toc-text">参考文档</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2023 By iCoder</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div></div></body></html>

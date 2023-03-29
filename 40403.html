@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>OpenGL 中 GLES30.glBlitFramebuffer() 的使用 | iCoder 的小站</title><meta name="author" content="iCoder"><meta name="copyright" content="iCoder"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="基本说明在 OpenGL 3.0 中，新增了一个api:GLES30.glBlitFramebuffer() 用来将一个矩形区域的像素值从读取缓存区的一个区域传输到绘制缓存区的另一个区域。 对应的api: 123456GLES30.glBlitFramebuffer(	int srcX0, int"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://icoderbin.github.io/40403.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenGL 中 GLES30.glBlitFramebuffer() 的使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-06 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/pic.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">53</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="iCoder 的小站"><span class="site-name">iCoder 的小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">OpenGL 中 GLES30.glBlitFramebuffer() 的使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-09-05T16:00:00.000Z" title="发表于 2021-09-06 00:00:00">2021-09-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OpenGL/">OpenGL</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OpenGL/OpenGL-%E4%B8%AD-GLES30-glBlitFramebuffer-%E7%9A%84%E4%BD%BF%E7%94%A8/">OpenGL 中 GLES30.glBlitFramebuffer() 的使用</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">643</span></span></div></div></div><article class="post-content" id="article-container"><h1 id="基本说明"><a href="#基本说明" class="headerlink" title="基本说明"></a>基本说明</h1><p>在 OpenGL 3.0 中，新增了一个api:<code>GLES30.glBlitFramebuffer()</code> 用来将一个矩形区域的像素值从读取缓存区的一个区域传输到绘制缓存区的另一个区域。</p>
+<p>对应的api:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GLES30.glBlitFramebuffer(</span><br><span class="line">	int srcX0, int srcY0, int srcX1, int srcY1, <span class="comment">//在读取帧缓存区的读取缓存区中指定源矩形的边界</span></span><br><span class="line">	int dstX0, int dstY0, int dstX1, int dstY1, <span class="comment">//在写帧缓存区的写缓存区内指定目标矩形的边界。</span></span><br><span class="line">	int mask, <span class="comment">// 标志的按位或，指示要复制哪些缓存区</span></span><br><span class="line">	int filter <span class="comment">// 指定在拉伸图像时要应用的插值</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>前四个参数表示读取数据的帧缓存区指定的矩形边界</li>
+<li>接下来四个区域是表示帧缓存区要复制的位置，即从（srcX0; srcY0）和（srcX1; srcY1）界定的区域复制到（dstX0; dstY0）和（dstX1; dstY1）</li>
+<li>mark 指示要复制哪些缓存区<ul>
+<li>GL_COLOR_BUFFER_BIT ：复制颜色缓存区</li>
+<li>GL_DEPTH_BUFFER_BIT ：复制深度缓存区</li>
+<li>GL_STENCIL_BUFFER_BIT ： 复制模板附着点</li>
+</ul>
+</li>
+<li>filter： 指定拉伸图像是要应用的差值。如果源矩形和目标矩形大小不相等，那么则需要用filter来指定用于调整源图像大小的差值方式。并且必须为GL_NEAREST或GL_LINEAR。</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>还以之前将摄像头采集到的视频流分别放置到屏幕上进行预览和使用MediaCodec进行编码为例来说明基本的使用（代码位置：<a target="_blank" rel="noopener" href="https://zwbin.gitee.io/categories/">使用SurfaceView和EGL进行预览和录制视频</a>）</p>
+<p>在这个示例中有两个EGLSurface，分别是用来显示到屏幕上的<code>mWindowSurface</code>和MediaCodec提供的用来传入到编码器的<code>mInputWindowSurface</code>。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// EGLSurface 和当前线程绑定</span></span><br><span class="line">mWindowSurface.makeCurrent();</span><br><span class="line"><span class="comment">// 执行绘制</span></span><br><span class="line">draw();</span><br><span class="line"><span class="comment">// 通知开始编码</span></span><br><span class="line">mVideoEncoder.frameAvailableSoon();</span><br><span class="line"><span class="comment">// 设置执行复制操作的源EGLSurface和目标EGLSurface</span></span><br><span class="line">mInputWindowSurface.makeCurrentReadFrom(mWindowSurface);</span><br><span class="line"><span class="comment">// 清屏</span></span><br><span class="line">GLES20.glClearColor(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</span><br><span class="line">GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);</span><br><span class="line">GlUtil.checkGlError(<span class="string">&quot;before glBlitFramebuffer&quot;</span>);</span><br><span class="line"><span class="comment">// 执行复制</span></span><br><span class="line">GLES30.glBlitFramebuffer(</span><br><span class="line">		<span class="number">0</span>, <span class="number">0</span>, mWindowSurface.getWidth(), mWindowSurface.getHeight(),</span><br><span class="line">		mVideoRect.left, mVideoRect.top, mVideoRect.right, mVideoRect.bottom,</span><br><span class="line">		GLES30.GL_COLOR_BUFFER_BIT, GLES30.GL_NEAREST);</span><br><span class="line"><span class="comment">// 设置时间戳</span></span><br><span class="line">mInputWindowSurface.setPresentationTime(timeStampNanos);</span><br><span class="line"><span class="comment">// 刷新数据</span></span><br><span class="line">mInputWindowSurface.swapBuffers();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 刷新数据</span></span><br><span class="line">mWindowSurface.makeCurrent();</span><br><span class="line">swapResult = mWindowSurface.swapBuffers();</span><br></pre></td></tr></table></figure>
+
+<p>其中代码中调用的<code>makeCurrentReadFrom</code>逻辑如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// drawSurface 代表目的EGLSurface， readSurface 代表源EGLSurface</span></span><br><span class="line"><span class="keyword">public</span> void makeCurrent(EGLSurface drawSurface, EGLSurface readSurface) &#123;</span><br><span class="line">	<span class="keyword">if</span> (mEGLDisplay == EGL14.EGL_NO_DISPLAY) &#123;</span><br><span class="line">		Log.d(TAG, <span class="string">&quot;NOTE: makeCurrent w/o display&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (!EGL14.eglMakeCurrent(mEGLDisplay, drawSurface, readSurface, mEGLContext)) &#123;</span><br><span class="line">		<span class="keyword">throw</span> new RuntimeException(<span class="string">&quot;eglMakeCurrent(draw,read) failed&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，当想要把图像流既写入屏幕预览，又要进行MediaCodec编码的时候，就不需要调用draw()方法两次了。</p>
+<p><strong>参考文档</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/MSK1111/article/details/103072763">GLES3.0中文API-glBlitFramebuffer</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/MSK1111/article/details/102854616?utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control">GLES3.0中文API-中文API list</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io">iCoder</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io/40403.html">https://icoderbin.github.io/40403.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://icoderbin.github.io" target="_blank">iCoder 的小站</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/30536.html" title="OpenGL投影和变换矩阵"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">OpenGL投影和变换矩阵</div></div></a></div><div class="next-post pull-right"><a href="/41050.html" title="OpenGL之FBO的使用基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">OpenGL之FBO的使用基础</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/41050.html" title="OpenGL之FBO的使用基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-06</div><div class="title">OpenGL之FBO的使用基础</div></div></a></div><div><a href="/44397.html" title="OpenGL使用一(绘制一个三角形)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-01</div><div class="title">OpenGL使用一(绘制一个三角形)</div></div></a></div><div><a href="/2243.html" title="OpenGL使用三(简单滤镜实现）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-03</div><div class="title">OpenGL使用三(简单滤镜实现）</div></div></a></div><div><a href="/60647.html" title="OpenGL使用二(绘制一张图片)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-02</div><div class="title">OpenGL使用二(绘制一张图片)</div></div></a></div><div><a href="/58506.html" title="OpenGL使用四(较复杂滤镜实现）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-03</div><div class="title">OpenGL使用四(较复杂滤镜实现）</div></div></a></div><div><a href="/30536.html" title="OpenGL投影和变换矩阵"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-07</div><div class="title">OpenGL投影和变换矩阵</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">基本说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">示例</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2023 By iCoder</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div></div></body></html>
