@@ -10,5 +10,13 @@
 	display: none;
 }
 #page-header.not-top-img #nav {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.3);
+}
+
+#body-wrap {
+	background: linear-gradient(40.55deg, #93a5cf 0%, #E4efe9 100%);
+}
+
+.post-reward {
+    margin-top: 0px;
 }
