@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>android MVI 架构详解 | icoderbin 的小站</title><meta name="author" content="icoderbin"><meta name="copyright" content="icoderbin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="随着业务逻辑的不断复杂，必须要有应用架构来去组织，以便开发者能够轻易的扩展、删除、修改应用程序的功能。应用程序的架构定义了程序各个部分各自应该承担的职责，而对职责的划分如果更加清晰，那么对于维护代码的健壮性则更加有力。 以下为应用架构设计的一些比较好的原则：  分离关注点。各自职责分配明确，该数据处"><link rel="shortcut icon" href="/css/icon.png"><link rel="canonical" href="https://icoderbin.github.io/posts/61040/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'android MVI 架构详解',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-23 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/pic.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/css/icon.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">63</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="icoderbin 的小站"><span class="site-name">icoderbin 的小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">android MVI 架构详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2023-04-22T16:00:00.000Z" title="更新于 2023-04-23 00:00:00">2023-04-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9E%B6%E6%9E%84/android-MVI-%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/">android MVI 架构详解</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>随着业务逻辑的不断复杂，必须要有应用架构来去组织，以便开发者能够轻易的扩展、删除、修改应用程序的功能。应用程序的架构定义了程序各个部分各自应该承担的职责，而对职责的划分如果更加清晰，那么对于维护代码的健壮性则更加有力。</p>
+<p>以下为应用架构设计的一些比较好的原则：</p>
+<ul>
+<li>分离关注点。各自职责分配明确，该数据处理的就做数据处理，该做UI展示的就做UI展示。一种常见的错误就是把很多业务都堆到Fragment&#x2F;Activity中去，一个Fragment&#x2F;Activity中包含了网络请求、业务处理、UI更新、事件触发等各种各样的逻辑。实际上Fragment&#x2F;Activity只是APP和和操作系统之间沟通的桥梁，功能很单纯，不要过度依赖于他们。</li>
+<li>单一数据源。将数据源集中到一处，防止出现有错误的篡改行为，也能防止多个数据源的数据冲突与不一致的问题，也能方便跟踪数据流向。</li>
+<li>单向数据流。数据仅向一个方向流动，即从数据层流向UI层。</li>
+</ul>
+<p>下面通过回顾历史，来分别看看MVC、MVP、MVVM、MVI这些架构的优势和缺点分别在哪里。</p>
+<h1 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h1><p>如下为MVC的基本组成部分。</p>
+<p><img src="/posts/61040/image1.jpg"></p>
+<ul>
+<li>Model层： 主要用来进行网络请求，数据处理等</li>
+<li>View层： 主要用于更新UI，操作UI。</li>
+<li>Controller层：主要用来处理各种业务逻辑，并提供Model和View之前的桥梁。</li>
+</ul>
+<p>如上图所示，MVC架构符合“分离关注点”的原则，它将数据的处理Model和视图的操作View拆出来，代码相对更加清晰了。但是可以看到View层可以直接操作数据，数据层也可以直接操作View。这样，两者的耦合性就会变的很强，随之而来的代码不可避免的就会杂糅到一起。</p>
+<p>且对于页面级别的MVC架构，Controller通常是Fragment&#x2F;Activity，这就导致了实际开发中VC在一个地方。如下图所示。</p>
+<p><img src="/posts/61040/image2.jpg"></p>
+<p>因此，<code>Fragment/Activity</code> 会不断地膨胀。这违反了我们最开始说的<code>Fragment/Activity</code> 仅仅作为和操作系统沟通的桥梁，不应承担太多的功能。</p>
+<h1 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h1><p><img src="/posts/61040/image3.jpg"></p>
+<ul>
+<li>Model层：主要进行网络请求，数据处理</li>
+<li>View层：主要用以更新UI等</li>
+<li>Presenter： 主要用来处理业务逻辑。</li>
+</ul>
+<p>MVP相对MVC做了进一步的发展，它将View层和Model层完全隔离开了，所有的控制都集中在了Presenter。这样View层和Model层的数据都更加纯粹，维护起来也就更加方便。</p>
+<p>而MVP框架主要存在的问题就是Presenter会不断地膨胀，且View和Model之间的所有交互都要经过Presenter，这样会导致Presenter的接口会越来越多，变得越来越难以维护。</p>
+<h1 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h1><p><img src="/posts/61040/image4.jpg"></p>
+<p>MVVM 相比MVP非常相似，主要有两点升级：</p>
+<ol>
+<li>MVVM将MVP中的P 换成了VM，这样减少了M和V交流过程中的接口定义。VM 可实现自动的数据变动感知，减少了接口定义。</li>
+<li>VM 和 V之间可以实现databinding的双向数据绑定。VM数据的修改直接能反映到View上，View的变化也直接反映到VM上。</li>
+</ol>
+<p>但是，目前谷歌提供的databinding是不太好用，大家都不怎么用，那么MVVM 最终也变成了如下样子。</p>
+<p><img src="/posts/61040/image5.jpg"></p>
+<p>这样，是变成了View 通过观察LiveData的变化而更新自己的UI，并不是自动更新自己的UI。</p>
+<p>MVVM 存在如下不足。</p>
+<ul>
+<li>虽然在一定程度上弥补了Presenter的需要定义很多接口的问题，但是，还是需要维护页面的许多个状态。其中可变状态留给自己，不可变状态留给View做动态监听。类似如下</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TestViewModel</span> : <span class="type">ViewModel</span>() &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> _postList: MutableLiveData&lt;ArrayList&lt;PostItem&gt;&gt; = MutableLiveData()</span><br><span class="line">    <span class="keyword">val</span> postList: LiveData&lt;List&lt;PostItem&gt;&gt; = _postList</span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一个View可能需要监听很多个LiveData。导致如果需要控制比如某个View的展示或隐藏，需要监听很多的LiveData。这就导致了在View层的逻辑很混乱的局面。如下图所示。</li>
+</ul>
+<p><img src="/posts/61040/image6.jpg"></p>
+<h1 id="MVI"><a href="#MVI" class="headerlink" title="MVI"></a>MVI</h1><p>MVI 的基本架构图可以认为是这样的。</p>
+<p><img src="/posts/61040/image7.jpg"></p>
+<ul>
+<li>Model: 主要进行网络请求，数据处理</li>
+<li>View: 主要进行View的更新</li>
+<li>Intent： 意图，View告诉VM自己的意图。</li>
+</ul>
+<p>MVI相比于MVVM是很像，不过它引入了两个重要的概念。</p>
+<ul>
+<li>单向数据流。MVI强调数据的单向流动，主要流程是：用户通过Intent通知Model自己的行为，Model基于Intent更新自己的State，View接收到State的变化。</li>
+<li>单一数据来源。View的数据只能来源于State，任何其他地方都不可以，这样保证了数据的有效性。</li>
+</ul>
+<p>关于单向数据流，盗用谷歌官方的一张图来说明。</p>
+<p><img src="/posts/61040/image8.jpg"></p>
+<p>如上所示，所有的State数据都是从Model-&gt;ViewModel-&gt;View的，View无法去做任何关于数据方面的操控。</p>
+<p>关于单一数据来源，继续盗用谷歌官方的一张图来说明。</p>
+<p><img src="/posts/61040/image9.jpg"></p>
+<p>View只依赖于State来显示，其他处理逻辑他不管，即View+State 就能完全定义当前UI的样式。</p>
+<p>而MVI架构中VM的作用，即是接受Intent，更新State的作用。</p>
+<p><img src="/posts/61040/image10.jpg"></p>
+<blockquote>
+<p>MVI：<br>View 对VM 说： 用户要在我的列表第三个位置插入一个帖子，请告诉我该如何显示。<br>MVVM：<br>View对VM说：用户要在我的列表第三个位置插入一个帖子，你处理一下，请更新一下你的状态，更新完成以后告诉我一声，我根据你的状态计算一下我该怎么显示。</p>
+</blockquote>
+<p>如下所示为MVI框架下的数据流图，可以发现，经过整理以后，规整了很多。</p>
+<p><img src="/posts/61040/image11.jpg"></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.android.com/topic/architecture?hl=zh-cn">谷歌官方-应用架构指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7022624191723601928">MVVM 进阶版：MVI 架构了解一下~</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io">icoderbin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io/posts/61040/">https://icoderbin.github.io/posts/61040/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://icoderbin.github.io" target="_blank">icoderbin 的小站</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/css/icon.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/css/wechat.png" target="_blank"><img class="post-qr-code-img" src="/css/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/css/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/css/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/61253/" title="Android通知Notification详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Android通知Notification详解</div></div></a></div><div class="next-post pull-right"><a href="/posts/40243/" title="IPC调用问题排查"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">IPC调用问题排查</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MVC"><span class="toc-number">1.</span> <span class="toc-text">MVC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MVP"><span class="toc-number">2.</span> <span class="toc-text">MVP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MVVM"><span class="toc-number">3.</span> <span class="toc-text">MVVM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MVI"><span class="toc-number">4.</span> <span class="toc-text">MVI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div></div></body></html>
