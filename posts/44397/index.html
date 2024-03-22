@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OpenGL使用一(绘制一个三角形) | icoderbin 的小站</title><meta name="author" content="icoderbin"><meta name="copyright" content="icoderbin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简介OpenGL是一个跨编程语言、跨平台的编程图形程序接口，OpenGL ES 是OpenGL的子集，主要针对手机、PDA和游戏主机等嵌入式设备，去除了一些不必要和性能较低的接口。 OpenGL ES 的函数都是面向过程的函数，所以OpenGL ES 内部维护了一个非常强大的状态机，即OpenGL的"><link rel="shortcut icon" href="/css/icon.png"><link rel="canonical" href="https://icoderbin.github.io/posts/44397/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenGL使用一(绘制一个三角形)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-01 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/pic.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/css/icon.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">78</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="icoderbin 的小站"><span class="site-name">icoderbin 的小站</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">OpenGL使用一(绘制一个三角形)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2021-08-31T16:00:00.000Z" title="更新于 2021-09-01 00:00:00">2021-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OpenGL/">OpenGL</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OpenGL/OpenGL%E4%BD%BF%E7%94%A8%E4%B8%80-%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2/">OpenGL使用一(绘制一个三角形)</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>OpenGL是一个跨编程语言、跨平台的编程图形程序接口，OpenGL ES 是OpenGL的子集，主要针对手机、PDA和游戏主机等嵌入式设备，去除了一些不必要和性能较低的接口。</p>
+<p>OpenGL ES 的函数都是面向过程的函数，所以OpenGL ES 内部维护了一个非常强大的状态机，即OpenGL的上下文context。也就是说调用OpenGL的函数时，本质上都是对这个状态机中的某个状态或者对象进行操作，当然需要把这个上下文context设置为当前正在使用的上下文。</p>
+<blockquote>
+<p>OpenGL上下文是一个巨大的状态机，所以切换上下文往往会产生较大的开销，但是不同的绘制模块，可能需要使用完全独立的状态管理。因此，可以在应用程序中分别创建多个不同的上下文，在不同线程中使用不同的上下文，上下文之间共享纹理、缓冲区等资源。这样的方案，会比反复切换上下文，或者大量修改渲染状态更加合理高效。</p>
+</blockquote>
+<h1 id="着色器程序"><a href="#着色器程序" class="headerlink" title="着色器程序"></a>着色器程序</h1><p>OpenGL ES中的所有图像都是由三种图元组成：点、线、三角形。所以在确定图像绘制区域和形状的时候需要确定这些图元的顶点，以组成复杂图形。</p>
+<p>OpenGL 渲染管线可以理解为OpenGL对原始图像数据处理的流水线，即在流水线上对原始的图像数据进行各种变换操作（比如旋转、虚化等），然后最终输出到屏幕上。</p>
+<ul>
+<li>固定管线，对图像数据的处理效果已经固定，只能通过一些API进行确定是否调用某个图像处理节点或者确定调用图像处理节点的顺序。</li>
+<li>可编程管线：提供了最大化的自由，在管线中提供了可编程的接口，我们可以通过这个可编程接口更大范围的自定义对图像数据的处理。</li>
+</ul>
+<p>OpenGL ES2.0后就加入可编程渲染管线，所以，2.0以后对图像的处理更加自由。这就引入了”着色器程序“的概念。在OpenGL 绘制到屏幕之前，可以通过着色器程序对图像数据进行处理。着色器程序分为顶点着色器和片元着色器。</p>
+<ul>
+<li>顶点着色器：一般处理图形每个顶点的坐标变换（旋转、平移、投影灯），并行计算，且顶点着色器运算过程中无法访问其他顶点数据。</li>
+<li>片元着色器：用来处理图形中每个像素点颜色计算和填充。片元着色器是OpenGL中用于计算片段（像素）颜色的程序，片元着色器是逐像素运算的程序，也就说每个像素都会执行一次片元着色器，当然也是并行的。</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>下面就通过GLSurfaceView 和OpenGL 来绘制一个最简单的三角形。</p>
+<p>在布局文件中加入GLSurfaceView</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.opengl.GLSurfaceView</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:id</span>=<span class="string">&quot;@+id/surfaceView&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置一下GLSurfaceView的参数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">OpenGlActivity</span> : <span class="type">AppCompatActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> surfaceView: GLSurfaceView</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_opengl)</span><br><span class="line">        surfaceView = findViewById(R.id.surfaceView)</span><br><span class="line">        <span class="comment">// 设置openGL ES的版本号为2</span></span><br><span class="line">        surfaceView.setEGLContextClientVersion(<span class="number">2</span>)</span><br><span class="line">        <span class="comment">// 配置一下参数,颜色、深度等参数</span></span><br><span class="line">        surfaceView.setEGLConfigChooser(<span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">0</span>)</span><br><span class="line">        <span class="comment">//给GLSurfaceView设置Render</span></span><br><span class="line">        surfaceView.setRenderer(MyRender())</span><br><span class="line">        <span class="comment">// 设置渲染模式</span></span><br><span class="line">        surfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>GLSurfaceView的渲染模式可以分为两种：</p>
+<ul>
+<li>GLSurfaceView.RENDERMODE_CONTINUOUSLY :默认的渲染方式，当设置为RENDERMODE_CONTINUOUSLY时渲染器会不停地渲染场景</li>
+<li>GLSurfaceView.RENDERMODE_WHEN_DIRTY : 设置为RENDERMODE_WHEN_DIRTY时只有在创建和调用requestRender()时才会刷新。</li>
+</ul>
+<blockquote>
+<p>设置为RENDERMODE_WHEN_DIRTY方式时，不会让CPU一直处于高速运转状态，可以提高手机电池使用时间和软件整体性能。</p>
+</blockquote>
+<p>GLSurfaceView 渲染器，用来渲染帧：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyRender.kt</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRender</span> : <span class="type">GLSurfaceView.Renderer</span> &#123;</span><br><span class="line">    <span class="comment">// 顶点着色器程序</span></span><br><span class="line">    <span class="keyword">val</span> VERTTEX_SHADER =</span><br><span class="line">                <span class="string">&quot;attribute vec4 vPosition;\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;void main() &#123;\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;   gl_Position = vPosition;\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;&#125;&quot;</span></span><br><span class="line">    <span class="comment">// 片元着色器</span></span><br><span class="line">    <span class="keyword">val</span> FRAGMENT_SHADER = <span class="string">&quot;&quot;</span> +</span><br><span class="line">            <span class="string">&quot;void main() &#123;\n&quot;</span> +</span><br><span class="line">            <span class="string">&quot;   gl_FragColor=vec4(1,0,0,1);\n&quot;</span> +</span><br><span class="line">            <span class="string">&quot;&#125;&quot;</span></span><br><span class="line">    <span class="comment">// 顶点坐标 x、y、z</span></span><br><span class="line">    <span class="keyword">val</span> vertex = floatArrayOf(</span><br><span class="line">        <span class="number">0f</span>, <span class="number">1f</span>, <span class="number">0f</span>,</span><br><span class="line">        -<span class="number">0.5f</span>, -<span class="number">1f</span>, <span class="number">0f</span>,</span><br><span class="line">        <span class="number">1f</span>, -<span class="number">1f</span>, <span class="number">0f</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">var</span> mVertexBuffer: FloatBuffer</span><br><span class="line">    <span class="keyword">var</span> mProgram = -<span class="number">1</span></span><br><span class="line">    <span class="keyword">var</span> mPositionHandle = -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        <span class="comment">// 创建以下定点坐标，稍后的顶点着色器绘制范围为改坐标置顶</span></span><br><span class="line">        mVertexBuffer = ByteBuffer.allocateDirect(vertex.size * <span class="number">4</span>)</span><br><span class="line">            .order(ByteOrder.nativeOrder())</span><br><span class="line">            .asFloatBuffer()</span><br><span class="line">            .put(vertex)</span><br><span class="line">        mVertexBuffer.position(<span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDrawFrame</span><span class="params">(gl: <span class="type">GL10</span>?)</span></span> &#123;</span><br><span class="line">        <span class="comment">// 清屏</span></span><br><span class="line">        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)</span><br><span class="line">        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, <span class="number">0</span>,<span class="number">3</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSurfaceChanged</span><span class="params">(gl: <span class="type">GL10</span>?, width: <span class="type">Int</span>, height: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        <span class="comment">// 设置绘制区域</span></span><br><span class="line">        GLES20.glViewport(<span class="number">0</span>,<span class="number">0</span>,width, height)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSurfaceCreated</span><span class="params">(gl: <span class="type">GL10</span>?, config: <span class="type">EGLConfig</span>?)</span></span> &#123;</span><br><span class="line">        <span class="comment">// 设置清屏颜色</span></span><br><span class="line">        GLES20.glClearColor(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>)</span><br><span class="line">        <span class="comment">// 创建gl程序</span></span><br><span class="line">        mProgram = OpenGLUtil.createProgram(VERTTEX_SHADER, FRAGMENT_SHADER)</span><br><span class="line">        <span class="comment">// 获取着色器程序中的变量</span></span><br><span class="line">        mPositionHandle = GLES20.glGetAttribLocation(mProgram, <span class="string">&quot;vPosition&quot;</span>)</span><br><span class="line">        GLES20.glEnableVertexAttribArray(mPositionHandle)</span><br><span class="line">        <span class="comment">// 设置position 区域</span></span><br><span class="line">        GLES20.glVertexAttribPointer(mPositionHandle, <span class="number">3</span>,GLES20.GL_FLOAT,<span class="literal">false</span>,<span class="number">12</span>, mVertexBuffer)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上所示，在进行图像绘制的时候自定义了顶点着色器和片元着色器。顶点坐标使用ByteBuffer进行存储。</p>
+<p>下面API是给OpenGL ES指定顶点坐标的函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//指定定点坐标</span><br><span class="line">public static void glVertexAttribPointer(</span><br><span class="line">	int indx,  //顶点着色器程序中传给aPosition变量的变量句柄</span><br><span class="line">	int size, // 定点有几位坐标显示，如下使用x,y,z显示长度就为3</span><br><span class="line">	int type,  // 定点坐标每个数字的类型</span><br><span class="line">	boolean normalized,</span><br><span class="line">	int stride, // 步长 每个顶点的几位坐标* type类型所占的位数</span><br><span class="line">	java.nio.Buffer ptr // 顶点坐标存储的buffer地址</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+<p>创建OpenGL程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 根据顶点着色器程序和片元着色器程序创建程序</span><br><span class="line">fun createProgram(vertexCode:String, fragmentCode:String):Int &#123;</span><br><span class="line">	// 创建gl程序</span><br><span class="line">	val program = GLES20.glCreateProgram()</span><br><span class="line">	// 创建定点着色器</span><br><span class="line">	val vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexCode)</span><br><span class="line">	// 创建片元着色器</span><br><span class="line">	val fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER,fragmentCode)</span><br><span class="line">	// 将定点着色器加载到程序里</span><br><span class="line">	GLES20.glAttachShader(program, vertexShader)</span><br><span class="line">	// 将片元着色器加载到程序里</span><br><span class="line">	GLES20.glAttachShader(program,fragmentShader)</span><br><span class="line">	// 链接，像进行c开发时的link 一样</span><br><span class="line">	GLES20.glLinkProgram(program)</span><br><span class="line">	// 使用着色器</span><br><span class="line">	GLES20.glUseProgram(program)</span><br><span class="line"></span><br><span class="line">	return program</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建顶点着色器或者片元着色器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fun loadShader(type: Int,shaderCode: String):Int &#123;</span><br><span class="line">	val shader = GLES20.glCreateShader(type)</span><br><span class="line">	GLES20.glShaderSource(shader, shaderCode)</span><br><span class="line">	GLES20.glCompileShader(shader)</span><br><span class="line">	return shader</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>这时候运行成功后就会在View上绘制出一个红色的三角形。</p>
+<p><code>GLES20.glDrawArrays()</code> 用来进行具体的绘制操作，而且有三种绘制方式，具体的可参考文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_22657459/article/details/104764671">Opengl ES系列学习–glDrawArrays API使用</a></p>
+<ul>
+<li><code>GLES20.GL_TRIANGLES</code> : 每三个顶点代表一个三角形</li>
+<li><code>GLES20.GL_TRIANGLE_STRIP</code> : 后一个三角形复用前一个三角形最后一条边</li>
+<li><code>GLES20.GL_TRIANGLE_FAN</code> : 所有三角形复用一个顶点。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总结一下，整个绘制流程如下：</p>
+<ol>
+<li>清空屏幕 <code>GLES20.glClear(）</code></li>
+<li>创建着色器程序，获取句柄 <code>GLES20.glCreateProgram()</code></li>
+<li>创建顶点着色器 <code>loadShader()</code></li>
+<li>创建片元着色器 <code>loadShader()</code></li>
+<li>将顶点着色器加载到程序里 <code>GLES20.glAttachShader()</code></li>
+<li>将片元着色器加载到程序里 <code>GLES20.glAttachShader()</code></li>
+<li>链接程序 <code>GLES20.glLinkProgram()</code></li>
+<li>使用程序 <code>GLES20.glUseProgram()</code></li>
+<li>获取着色器中的各个变量 <code>GLES20.glGetAttribLocation()</code></li>
+<li>设置变量的可用状态 <code>GLES20.glEnableVertexAttribArray()</code></li>
+<li>给变量赋值 <code>GLES20.glVertexAttribPointer()</code></li>
+<li>绘制 <code>GLES20.glDrawArrays()</code></li>
+</ol>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/cxpamcu/article/details/103486521">【Android 音视频开发打怪升级：OpenGL渲染视频画面篇】一、初步了解OpenGL ES</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/github_34402358/article/details/79440763">OpenGL和OpenGl ES简介</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/grafika/">grafika</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903843180838920">OpenGL&#x2F;OpenGL ES 入门：图形API以及专业名词解析</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_22657459/article/details/104764671">Opengl ES系列学习–glDrawArrays API使用</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io">icoderbin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io/posts/44397/">https://icoderbin.github.io/posts/44397/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://icoderbin.github.io" target="_blank">icoderbin 的小站</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/css/icon.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/css/wechat.png" target="_blank"><img class="post-qr-code-img" src="/css/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/css/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/css/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/60647/" title="OpenGL使用二(绘制一张图片)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">OpenGL使用二(绘制一张图片)</div></div></a></div><div class="next-post pull-right"><a href="/posts/62687/" title="FFmpeg类型之AVPacket"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">FFmpeg类型之AVPacket</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9D%80%E8%89%B2%E5%99%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">着色器程序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-number">5.</span> <span class="toc-text">参考文档</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

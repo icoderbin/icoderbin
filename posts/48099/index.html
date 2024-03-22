@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>TransactionTooLargeException异常分析和工具建设 | icoderbin 的小站</title><meta name="author" content="icoderbin"><meta name="copyright" content="icoderbin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="问题线上报了以下的零星的crash，如下所示： 123456789101112131415java.lang.RuntimeException: android.os.TransactionTooLargeException: data parcel size 534288 bytesat andr"><link rel="shortcut icon" href="/css/icon.png"><link rel="canonical" href="https://icoderbin.github.io/posts/48099/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'TransactionTooLargeException异常分析和工具建设',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-01 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/pic.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/css/icon.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">78</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="icoderbin 的小站"><span class="site-name">icoderbin 的小站</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">TransactionTooLargeException异常分析和工具建设</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2022-07-31T16:00:00.000Z" title="更新于 2022-08-01 00:00:00">2022-08-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/android/">android</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/android/TransactionTooLargeException%E5%BC%82%E5%B8%B8%E5%88%86%E6%9E%90%E5%92%8C%E5%B7%A5%E5%85%B7%E5%BB%BA%E8%AE%BE/">TransactionTooLargeException异常分析和工具建设</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>线上报了以下的零星的crash，如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">java.lang.RuntimeException: android.os.TransactionTooLargeException: data parcel size 534288 bytes</span><br><span class="line">at android.app.servertransaction.PendingTransactionActions$StopInfo.run(PendingTransactionActions.java:160)</span><br><span class="line">at android.os.Handler.handleCallback(Handler.java:873)</span><br><span class="line">at android.os.Handler.dispatchMessage(Handler.java:99)</span><br><span class="line">at android.os.Looper.loop(Looper.java:233)</span><br><span class="line">at android.app.ActivityThread.main(ActivityThread.java:7212)</span><br><span class="line">at java.lang.reflect.Method.invoke(Native Method)</span><br><span class="line">at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:499)</span><br><span class="line">at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:965)</span><br><span class="line">Caused by: android.os.TransactionTooLargeException: data parcel size 534288 bytes</span><br><span class="line">at android.os.BinderProxy.transactNative(Native Method)</span><br><span class="line">at android.os.BinderProxy.transact(Binder.java:1144)</span><br><span class="line">at android.app.IActivityManager$Stub$Proxy.activityStopped(IActivityManager.java:3929)</span><br><span class="line">at java.lang.reflect.Method.invoke(Native Method)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>TransactionTooLargeException</code> 问题产生的原因是通过Binder进行跨进程调用传输数据的时候，传输的数据过大。</p>
+<p>我们知道Binder跨进程调用传输数据时会在内核空间开辟一个数据缓存区进行两个进程之间的数据交换。目前Android分配的数据缓冲区大小为1M,如果传递数据量太大，则无法放入数据缓存区，这样就会报<code>TransactionTooLargeException</code> 异常。</p>
+<p>如上crash日志是在<code>activityStopped()</code>时发生了异常。这是因为Android系统为了在 <code>Activity/Fragment</code> 被系统销毁重建的时候恢复状态，往往在<code>Activity/Fragment</code>被销毁的时候会存储当前 <code>Activity/Fragment</code>的一些状态，以保证重建的时候能够恢复现场，因此在<code>activityStopped()</code>进行了状态保存。因为Activity和AMS的通信是跨进程的调用，因此如果存储的状态过大的话，就会导致<code>TransactionTooLargeException</code>的异常发生。</p>
+<h1 id="工具引入"><a href="#工具引入" class="headerlink" title="工具引入"></a>工具引入</h1><p>知道了问题产生的原因，就需要去做一些排查，到底是哪个<code>Activity/Fragment</code> 导致的State状态过大呢？</p>
+<p>分析<code>TransactionTooLargeException</code> 问题，如果单纯分析上报上来的异常栈，那么很难定位到问题原因。因为异常栈上大部分是进程间调用的信息，并无业务代码中详细的信息。且它和OOM问题类似，导致<code>TransactionTooLargeException</code>异常的并不一定是调用的地方本身。</p>
+<p>比如说A业务向Binder的共享内存区传递了0.99M的数据，那么这时有可能并不会崩溃，但是如果B业务再传递0.01M，那么就可能崩溃了，即引发异常的往往是压死骆驼的最后一根稻草。不过当然，这种情况一般也是极少的，最常见的还是大数据传递的时候会直接崩掉。</p>
+<p>目前有一个常用的开源工具<a target="_blank" rel="noopener" href="https://github.com/guardian/toolargetool/tree/release-0.2.0">toolargetool</a>，主要用来分析<code>Activity/Fragment</code> 在onStop()的时候存储的State内容。我们可以通过这个工具来排查具体问题。</p>
+<p>toolargetool 利用Activity和Fragment的生命周期来监控对应存储的bundle值。在Activity的生命周期<code>onSaveInstanceState</code> 获取到当前需要存储的State数据。在Fragment的 <code>onSaveInstanceState</code> 存储Fragment的State数据。然后分别在Activity 的onStop和onDestroy方法中打印出来这些存储的State数据和大小。</p>
+<p>如下代码所示：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ActivitySavedStateLogger</span>(</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> formatter: Formatter,</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> logger: Logger,</span><br><span class="line">        logFragments: <span class="built_in">Boolean</span></span><br><span class="line">) : Application.ActivityLifecycleCallbacks &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> fragmentLogger = <span class="keyword">if</span> (logFragments) FragmentSavedStateLogger(formatter, logger) <span class="keyword">else</span> <span class="literal">null</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> savedStates = HashMap&lt;Activity, Bundle&gt;()</span><br><span class="line">    <span class="keyword">var</span> isLogging: <span class="built_in">Boolean</span> = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">set</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityCreated</span><span class="params">(activity: <span class="type">Activity</span>, savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (activity <span class="keyword">is</span> FragmentActivity &amp;&amp; fragmentLogger != <span class="literal">null</span>) &#123;</span><br><span class="line">            activity.supportFragmentManager</span><br><span class="line">                    .registerFragmentLifecycleCallbacks(fragmentLogger, <span class="literal">true</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityDestroyed</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line">        logAndRemoveSavedState(activity)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivitySaveInstanceState</span><span class="params">(activity: <span class="type">Activity</span>, outState: <span class="type">Bundle</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isLogging) &#123;</span><br><span class="line">            savedStates[activity] = outState</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityStopped</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line">        logAndRemoveSavedState(activity)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">logAndRemoveSavedState</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> savedState = savedStates.remove(activity)</span><br><span class="line">        <span class="keyword">if</span> (savedState != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">val</span> message = formatter.format(activity, savedState)</span><br><span class="line">                logger.log(message)</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e: RuntimeException) &#123;</span><br><span class="line">                logger.logException(e)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>savedState获取以后，分别计算一下内容的大小并打印出来就可以了。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">sizeTreeFromBundle</span><span class="params">(bundle: <span class="type">Bundle</span>)</span></span>: SizeTree &#123;</span><br><span class="line">    <span class="keyword">val</span> results = ArrayList&lt;SizeTree&gt;(bundle.size())</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">val</span> copy = Bundle(bundle)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> bundleSize = sizeAsParcel(bundle)</span><br><span class="line">        <span class="comment">// 不断计算各个key下存储的State大小</span></span><br><span class="line">        <span class="keyword">for</span> (key <span class="keyword">in</span> copy.keySet()) &#123;</span><br><span class="line">            bundle.remove(key)</span><br><span class="line">            <span class="keyword">val</span> newBundleSize = sizeAsParcel(bundle)</span><br><span class="line">            <span class="keyword">val</span> valueSize = bundleSize - newBundleSize</span><br><span class="line">            results.add(SizeTree(key, valueSize, emptyList()))</span><br><span class="line">            bundleSize = newBundleSize</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        bundle.putAll(copy)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> SizeTree(<span class="string">&quot;Bundle&quot;</span> + System.identityHashCode(bundle), sizeAsParcel(bundle), results)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们在一定程度上就能获取到各个操作路径下的State状态，进而能够排查问题。</p>
+<p>toolargetool为我们提供的是一个思路，真正工程化的运用还要加以改造。比如说，虽然可以打印出Fragment所占的State状态大小，但是详细的占用并没有办法知道，需要通过反射获取<code>key=&quot;android:support:fragments&quot;</code>的详细数据。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> fragmentStateClass <span class="keyword">by</span> lazy &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;androidx.fragment.app.FragmentState&quot;</span>)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: ClassNotFoundException) &#123;</span><br><span class="line">            <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> fragmentManagerStateClass <span class="keyword">by</span> lazy &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;androidx.fragment.app.FragmentManagerState&quot;</span>)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: ClassNotFoundException) &#123;</span><br><span class="line">            <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getFragmentDetailState</span><span class="params">(outState: <span class="type">Bundle</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> fragments: Any? = outState.getParcelable(<span class="string">&quot;android:support:fragments&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> (fragments != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                fragmentManagerStateClass?.getDeclaredField( <span class="string">&quot;mActive&quot;</span>)?.let &#123; mActiveField -&gt;</span><br><span class="line">                    mActiveField.isAccessible = <span class="literal">true</span></span><br><span class="line">                    <span class="keyword">val</span> active = mActiveField.<span class="keyword">get</span>(fragments) <span class="keyword">as</span> ArrayList&lt;*&gt;</span><br><span class="line">                    fragmentStateClass?.getDeclaredField(<span class="string">&quot;mSavedFragmentState&quot;</span>)?.let &#123; mSavedFragmentStateField -&gt;</span><br><span class="line">                        mSavedFragmentStateField.isAccessible = <span class="literal">true</span></span><br><span class="line">                        active.forEach &#123;mActiveItem -&gt;</span><br><span class="line">                            <span class="keyword">val</span> bundle = mSavedFragmentStateField.<span class="keyword">get</span>(mActiveItem) <span class="keyword">as</span> Bundle</span><br><span class="line">                            Log.i(<span class="string">&quot;out_bundle&quot;</span>, <span class="string">&quot;bundle=<span class="subst">$&#123;bundle&#125;</span>&quot;</span>)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e: Exception) &#123;</span><br><span class="line">                e.printStackTrace()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外，在工程化应用时，需要对获取到的数据更加合理化的排布，以便能更方便得排查问题。</p>
+<h1 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h1><p>回归到业务代码的问题。经过仔细的分析排查，发现是ViewPager2 + Fragment的使用的时候，存在四个明显让State膨胀的地方。</p>
+<ul>
+<li>ViewPager2 会存储自己的状态值，这个值如果翻页多了会很大。</li>
+<li>FragmentStateAdapter 会将每个创建的Fragment的 State 进行保存，而这个已保存的项却不能及时清理掉，导致了当翻页越来越多以后，State会越积越多。</li>
+<li>ViewPager2 中的所有Fragment都会存储View的信息以便恢复整个状态，这个View 的State 存储在<code>android:view_state</code>这个key下，也会越积越多。</li>
+<li>ViewPager2 中的Fragment创建的时候，给Fragment传递参数会传递一个列表信息数据，通过setArgument()。 这个setArgument()最终也会在Fragment中越积越多。</li>
+</ul>
+<p>下面是修复方案：</p>
+<ul>
+<li>处理问题一，比较简单，通过在ViewPager2上添加<code>android:saveEnabled=&quot;false&quot;</code> 会发现State会少很多。</li>
+<li>处理问题二，可以通过反射获取<code>FragmentStateAdapter</code>中的mSavedStates，并对其定期清理。如下代码所示：</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FragmentStateAdapter.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">FragmentStateAdapter</span> <span class="title">extends</span></span><br><span class="line">        RecyclerView.Adapter&lt;FragmentViewHolder&gt; implements StatefulAdapter &#123;</span><br><span class="line">         </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> LongSparseArray&lt;Fragment.SavedState&gt; mSavedStates = new LongSparseArray&lt;&gt;();</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>通过反射调用。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> savedState <span class="keyword">by</span> lazy &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> savedStateField = FragmentStateAdapter::<span class="keyword">class</span>.java.getDeclaredField(<span class="string">&quot;mSavedStates&quot;</span>)</span><br><span class="line">        savedStateField.isAccessible = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">val</span> state = savedStateField.<span class="keyword">get</span>(<span class="keyword">this</span>)</span><br><span class="line">        <span class="keyword">if</span> (state <span class="keyword">is</span> LongSparseArray&lt;*&gt;) &#123;</span><br><span class="line">            state</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: Exception) &#123;</span><br><span class="line">        <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>处理问题三，需要重写Fragment根View的<code>saveHierarchyState</code>方法，删掉对super的默认调用。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> void saveHierarchyState(SparseArray&lt;Parcelable&gt; container) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>处理问题四，有两个思路提供。</li>
+</ul>
+<ol>
+<li>将FragmentStateAdapter 中所缓存的Fragment数量减少，以便缓存更少的Argument</li>
+<li>给Fragment传递参数时，不要通过setArgument()传递大对象。</li>
+</ol>
+<p>优化以后再上线，发现就没有这个问题了。</p>
+<h1 id="工具优化"><a href="#工具优化" class="headerlink" title="工具优化"></a>工具优化</h1><p>toolargetool 在排查<code>TransactionTooLargeException</code> 问题时比较方便，但是却存在一些缺点。</p>
+<ul>
+<li>每次在<code>activityStop()</code>调用的时候都去获取并解析并存储State完全没有必要，因为发生<code>TransactionTooLargeException</code>是非常小的概率，每次都解析会浪费资源。</li>
+<li>存在内存泄漏的风险。</li>
+<li>activity计算完成上报后，activtiy如果崩溃了，fragment的数据无法采集到。</li>
+</ul>
+<p>所以如果想要使用toolargetool 需要定义好策略。</p>
+<ul>
+<li>State 先计算大小再进行解析，如果大小过大再记录。</li>
+<li>删掉在onDestroy()的检测时机，只保留onStop()的时机</li>
+<li>只跟进Activity的生命周期，且Fragment的内容从<code>key=&quot;android:support:fragments&quot;</code>解析出来。</li>
+</ul>
+<h1 id="Hook-ActivityManager实现监控"><a href="#Hook-ActivityManager实现监控" class="headerlink" title="Hook ActivityManager实现监控"></a>Hook ActivityManager实现监控</h1><p>toolargetool 工具的缺点是每次都要去做尺寸检测，但是如果想要只在<code>TransactionTooLargeException</code> 异常发生时才检测和上报需要如何实现呢？ 这个时候我们可以hook一下ActivityManager的调用了。</p>
+<p>Activity和AMS的交互都需要ActivityManager来实现，因此调用activityStop()的时候也会经过ActivityManager，因此我们如果通过动态代理使用自己的对象，那么activityStop()的操作就在我们掌控之中了。</p>
+<p>关于ActivityManager的hook可参考如下开源库<a target="_blank" rel="noopener" href="https://github.com/13767004362/HookDemo/blob/master/app/src/main/java/com/xingen/hookdemo/hook/ams/AMSHookManager.java">AMSHookManager</a></p>
+<p>如下为hook代码</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Throws(Exception::class)</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">hookIActivityManager</span><span class="params">(context: <span class="type">Context</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> activityManagerSingletonField: Field =</span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123; <span class="comment">//8.0以上发生改变</span></span><br><span class="line">            <span class="keyword">val</span> activityManagerClass = Class.forName(<span class="string">&quot;android.app.ActivityManager&quot;</span>)</span><br><span class="line">            activityManagerClass.getDeclaredField(<span class="string">&quot;IActivityManagerSingleton&quot;</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">val</span> activityManagerNativeClass = Class.forName(<span class="string">&quot;android.app.ActivityManagerNative&quot;</span>)</span><br><span class="line">            activityManagerNativeClass.getDeclaredField(<span class="string">&quot;gDefault&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    activityManagerSingletonField.isAccessible = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">val</span> activityManagerSingleton: Any = activityManagerSingletonField.<span class="keyword">get</span>(<span class="literal">null</span>)</span><br><span class="line">    <span class="comment">// ActivityManagerSingleton是一个 android.util.Singleton对象; 我们取出这个单例里面的字段</span></span><br><span class="line">    <span class="keyword">val</span> singletonClass = Class.forName(<span class="string">&quot;android.util.Singleton&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> mInstanceField: Field = singletonClass.getDeclaredField(<span class="string">&quot;mInstance&quot;</span>)</span><br><span class="line">    mInstanceField.isAccessible = <span class="literal">true</span></span><br><span class="line">    <span class="comment">//获取到ActivityManager通讯代理对象，即IActivityManager对象</span></span><br><span class="line">    <span class="keyword">val</span> rawIActivityManager: Any = mInstanceField.<span class="keyword">get</span>(activityManagerSingleton)</span><br><span class="line">    <span class="comment">//动态代理，创建代理对象</span></span><br><span class="line">    <span class="keyword">val</span> proxy: Any = Proxy.newProxyInstance(</span><br><span class="line">        Thread.currentThread().contextClassLoader,</span><br><span class="line">        arrayOf&lt;Class&lt;*&gt;&gt;(Class.forName(<span class="string">&quot;android.app.IActivityManager&quot;</span>)),</span><br><span class="line">        <span class="keyword">object</span> : InvocationHandler &#123;</span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">invoke</span><span class="params">(proxy: <span class="type">Any</span>?, method: <span class="type">Method</span>?, args: <span class="type">Array</span>&lt;<span class="type">out</span> <span class="type">Any</span>&gt;?)</span></span>: Any? &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> method?.invoke(rawIActivityManager, *args)</span><br><span class="line">                &#125; <span class="keyword">catch</span> (t: InvocationTargetException) &#123;</span><br><span class="line">                    <span class="keyword">val</span> cause = t.cause</span><br><span class="line">                    <span class="keyword">if</span> (cause != <span class="literal">null</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (cause <span class="keyword">is</span> TransactionTooLargeException &amp;&amp; <span class="string">&quot;activityStopped&quot;</span> == method?.name &amp;&amp; args?.<span class="keyword">get</span>(<span class="number">1</span>) <span class="keyword">is</span> Bundle) &#123;</span><br><span class="line">                            <span class="comment">// 这个就是跨进程调用的传输的Bundle， 把它拿出来记录到crash日志即可。</span></span><br><span class="line">                            <span class="keyword">val</span> bundle = args[<span class="number">1</span>] <span class="keyword">as</span> Bundle?</span><br><span class="line"></span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">throw</span> cause</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">throw</span> t</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">//换成自己的IActivityManager对象</span></span><br><span class="line">    mInstanceField.<span class="keyword">set</span>(activityManagerSingleton, proxy)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io">icoderbin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io/posts/48099/">https://icoderbin.github.io/posts/48099/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://icoderbin.github.io" target="_blank">icoderbin 的小站</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/css/icon.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/css/wechat.png" target="_blank"><img class="post-qr-code-img" src="/css/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/css/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/css/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/51415/" title="使用Makefile进行多文件构建"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">使用Makefile进行多文件构建</div></div></a></div><div class="next-post pull-right"><a href="/posts/5134/" title="Linux信号机制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux信号机制</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%BC%95%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">工具引入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="toc-number">3.</span> <span class="toc-text">问题原因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E4%BC%98%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">工具优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hook-ActivityManager%E5%AE%9E%E7%8E%B0%E7%9B%91%E6%8E%A7"><span class="toc-number">5.</span> <span class="toc-text">Hook ActivityManager实现监控</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
