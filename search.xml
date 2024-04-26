@@ -1087,6 +1087,35 @@
     
     
     <entry>
+      <title>android消息触摸机制解析</title>
+      <link href="/posts/4917/"/>
+      <url>/posts/4917/</url>
+      
+        <content type="html"><![CDATA[<p>下面深入探讨一下Android的消息传递机制。</p><p>牵涉到的方法主要有如下：</p><p>Activity中：</p><ul><li>dispatchTouchEvent</li><li>onTouchEvent</li></ul><p>ViewGroup中：</p><ul><li>dispatchTouchEvent</li><li>onInterceptTouchEvent</li><li>onTouchEvent</li></ul><p>View 中：</p><ul><li>dispatchTouchEvent</li><li>onTouchEvent</li><li>OnTouchListener 中的onTouch方法</li></ul><h1 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h1><p>先放结论，然后通过典型的场景进行分析。</p><ul><li><code>dispatchTouchEvent</code> 用来进行事件分发，每个触摸事件都是通过<code>dispatchTouchEvent</code>向子View传递的，传递到哪一层停止需要由<code>onInterceptTouchEvent</code>和<code>onTouchEvent</code>决定。</li><li><code>onInterceptTouchEvent</code> 方法用来进行事件拦截。当<code>onInterceptTouchEvent</code>返回为false，则该View不拦截该触摸事件，触摸事件会通过<code>dispatchTouchEvent</code>继续向子View传递。如果<code>onInterceptTouchEvent</code>返回为true，那么证明需要拦截该事件，然后就会调用该View的<code>onTouchEvent</code>事件。</li><li><code>onTouchEvent</code> 是进行事件处理的方法。onTouchEvent返回为true 是为了告诉父View自己已经处理过该事件了，父View就不需要再处理了。onTouchEvent返回为false 是为了告诉父View自己没有处理过该事件，父View可以调用onTouchEvent处理。</li><li>如果某个ViewGroup通过<code>onInterceptTouchEvent</code>返回为true拦截了触摸事件，那么它的父View仍然能够随时通过<code>onInterceptTouchEvent</code>返回为true拦截掉事件。<ul><li>如果某个ViewGroup通过<code>onInterceptTouchEvent</code>返回为true拦截<code>ACTION_DOWN</code>，那么它的所有子View再也接收不到任何的触摸事件了。</li><li>如果某个ViewGroup通过<code>onInterceptTouchEvent</code>返回为true拦截<code>ACTION_MOVE</code>，那么之前接收事件的子View会收到<code>ACTION_CANCEL</code>，然后就再也不会收到触摸事件了。</li></ul></li><li>某个View的<code>onTouchEvent</code>返回为true后,是告诉系统“我通过<code>onTouchEvent</code>处理过事件了，父View不需要再处理了”。这时该View可以认为是TargetView，后续的触摸事件都会通过<code>dispatchTouchEvent</code>传递到该View为止，不会再向子View传递。当然，这个时候它的父View仍然能够通过<code>onInterceptTouchEvent</code>去做拦截，只不过因为有TargetView的存在，第一个事件仍然会透传到targetView，通过原View的onTouchEvent执行，第二个事件才会真正的被父View拦截，在父View执行<code>onTouchEvent</code>。</li><li><code>OnTouchListener</code>和<code>onTouchEvent</code>使用类似，只不过<code>OnTouchListener</code>优先级高于<code>onTouchEvent</code>，<code>OnTouchListener</code>调用后<code>onTouchEvent</code>就不再调用了。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> android </category>
+          
+          <category> android消息触摸机制解析 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 消息触摸 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>可观察数据存储器LiveData</title>
       <link href="/posts/10338/"/>
       <url>/posts/10338/</url>
@@ -1409,6 +1438,19 @@
             <tag> C++ </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>icoderbin@qq.com</title>
+      <link href="/posts/28357/"/>
+      <url>/posts/28357/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
       
     </entry>
     
@@ -1776,25 +1818,6 @@
     
     
     <entry>
-      <title>使用示例</title>
-      <link href="/posts/16341/"/>
-      <url>/posts/16341/</url>
-      
-        <content type="html"><![CDATA[<h1 id="如何绘制类图"><a href="#如何绘制类图" class="headerlink" title="如何绘制类图"></a>如何绘制类图</h1><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  classDiagram    exception &lt;|-- bad_alloc    exception &lt;|-- bad_cast    exception &lt;|-- bad_typeid    exception &lt;|-- bad_exception    exception &lt;|-- logic_error    exception &lt;|-- runtime_error    logic_error &lt;|-- domain_error    logic_error &lt;|-- invalid_argument    logic_error &lt;|-- length_error    logic_error &lt;|-- out_of_range    runtime_error &lt;|-- overflow_error    runtime_error &lt;|-- range_error    runtime_error &lt;|-- underflow_error  </pre></div><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  classDiagramclass PreviewPlayer {    #VideoPublishPreviewActivity activity    #PlayStatusChangeListener statusChangeListener    #View mPlayerContainer    #int viewWidth    #int viewHeight    +pauseOrResume() void    +seekTo(long ms) void    #setDebugInfo(int, int, float) void    #getRatio(int videoWidth, int videoHeight) float}class PlayStatusChangeListener {    +onPlayStatus(boolean isPaused) void    +onLoading(boolean isLoading) void    +onProgressChange(long totalTime, long currentProgress) void}    PreviewPlayer &lt;|-- UrlPreviewPlayer    PreviewPlayer &lt;|-- VlogPreviewPlayer    PreviewPlayer &lt;|-- LocalPreviewPlayer    PreviewPlayer ..&gt; PlayStatusChangeListener  </pre></div><h1 id="如何绘制图"><a href="#如何绘制图" class="headerlink" title="如何绘制图"></a>如何绘制图</h1><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  graph TB    A[开始] --&gt; B(&quot;是否在热区内&quot;)    B -- 否 --- C(&quot;调用默认触摸事件&quot;)    C --&gt; Z[结束]    B -- 是 --- D(&quot;吃掉事件，判断下一个action move&quot;)    D --&gt; E(&quot;是否为滑动&quot;)    E -- 是 --- F(&quot;吃掉事件，判断滑动距离给Seekbar&quot;)    E -- 否 --- G(&quot;模拟点击事件给到父View&quot;)    F --&gt; Z[结束]    G --&gt; Z[结束]  </pre></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> 使用示例 </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Bitmap知识详解</title>
       <link href="/posts/15339/"/>
       <url>/posts/15339/</url>
@@ -1896,17 +1919,6 @@
     
     
     <entry>
-      <title>icoderbin@qq.com</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title></title>
       <link href="/css/pic.css"/>
       <url>/css/pic.css</url>
@@ -1923,6 +1935,17 @@
       <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>隐藏的文件</title>
+      <link href="/hide/index.html"/>
+      <url>/hide/index.html</url>
+      
+        <content type="html"><![CDATA[<ul><li><a href="/posts/21270/">项目总结</a></li><li><a href="/posts/16341/">使用示例</a></li></ul>]]></content>
       
     </entry>
     
