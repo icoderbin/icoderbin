@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>xhook源码分析之基本使用 | icoderbin 的小站</title><meta name="author" content="icoderbin"><meta name="copyright" content="icoderbin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="xhook  是基于PLT的hook实现，下面对其如何使用，原理如何进行详细的学习。 编译so下载到源码后，需要将xhook编译成so文件，再在Android工程中接入。xhook提供了编译脚本.&amp;#x2F;build_libs.sh。编译脚本如下 12345#!&amp;#x2F;bin&amp;#x2F;bashndk-build"><link rel="shortcut icon" href="/css/icon.png"><link rel="canonical" href="https://icoderbin.github.io/posts/10502/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'xhook源码分析之基本使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-11 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/pic.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/css/icon.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">69</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">53</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">80</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="icoderbin 的小站"><span class="site-name">icoderbin 的小站</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">xhook源码分析之基本使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2022-08-10T16:00:00.000Z" title="更新于 2022-08-11 00:00:00">2022-08-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/xhook%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8B%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">xhook源码分析之基本使用</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://github.com/iqiyi/xHook">xhook </a> 是基于PLT的hook实现，下面对其如何使用，原理如何进行详细的学习。</p>
+<h1 id="编译so"><a href="#编译so" class="headerlink" title="编译so"></a>编译so</h1><p>下载到源码后，需要将xhook编译成so文件，再在Android工程中接入。xhook提供了编译脚本.&#x2F;build_libs.sh。编译脚本如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">ndk-build -C ./libxhook/jni</span><br><span class="line">ndk-build -C ./libbiz/jni</span><br><span class="line">ndk-build -C ./libtest/jni</span><br></pre></td></tr></table></figure>
+
+<p>在Android开发中，可以使用 ndk-build 或 CMake 来构建本地代码。两者都有各自的优点和使用场景。</p>
+<ul>
+<li><code>ndk-build</code> 是Android NDK提供的传统构建系统，使用 Android.mk 和 Application.mk 文件来定义构建规则。<code>ndk-build</code>更加简单直观，适合较小的项目或已经使用了很多年的项目。</li>
+<li><code>CMake</code> 是一个跨平台的构建系统，更加灵活和强大，适合大型项目或需要跨平台支持的项目。</li>
+</ul>
+<p>在xhook中使用了传统的<code>ndk-buid</code>的工具，使用<code>ndk-buid</code>构建时，需要将ndk构建工具添加到环境变量中，位置在<code>/~/Library/Android/sdk/ndk-bundle</code>中，如果ndk-bundle中的版本对一些操作不兼容，同样可以在<code>~/Library/Android/sdk/ndk/&lt;version&gt;</code>中找到。</p>
+<h2 id="ndk-build"><a href="#ndk-build" class="headerlink" title="ndk-build"></a>ndk-build</h2><p><code>ndk-build</code> 的构建依赖两个文件：<code>Android.mk</code> 和 <code>Application.mk</code>。</p>
+<ul>
+<li><code>Android.mk</code> 文件用于定义项目的模块和源文件。它指定如何构建本地代码库.</li>
+<li><code>Application.mk</code> 文件用于配置应用程序的构建选项和目标平台。这些设置适用于所有模块。</li>
+</ul>
+<h3 id="Android-mk"><a href="#Android-mk" class="headerlink" title="Android.mk"></a>Android.mk</h3><p>如下所示为<code>Android.mk</code>的文件内容。</p>
+<figure class="highlight mk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_PATH := <span class="variable">$(<span class="built_in">call</span> my-<span class="built_in">dir</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span> <span class="variable">$(CLEAR_VARS)</span></span><br><span class="line">LOCAL_MODULE     := xhook</span><br><span class="line">LOCAL_SRC_FILES  := xhook.c \</span><br><span class="line">                    xh_core.c \</span><br><span class="line">                    xh_elf.c \</span><br><span class="line">                    xh_jni.c \</span><br><span class="line">                    xh_log.c \</span><br><span class="line">                    xh_util.c \</span><br><span class="line">                    xh_version.c</span><br><span class="line">LOCAL_C_INCLUDES := <span class="variable">$(LOCAL_PATH)</span></span><br><span class="line">LOCAL_CFLAGS     := -Wall -Wextra -Werror -fvisibility=hidden</span><br><span class="line">LOCAL_CONLYFLAGS := -std=c11</span><br><span class="line">LOCAL_LDLIBS     := -llog</span><br><span class="line"><span class="keyword">include</span> <span class="variable">$(BUILD_SHARED_LIBRARY)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>LOCAL_PATH</code>: 指定当前<code>Android.mk</code>文件所在的目录。通常使用$(call my-dir)宏来获取这个路径。</li>
+<li><code>include $(CLEAR_VARS)</code>: 清除之前定义的所有局部变量，确保变量不会受到上一个模块的影响。</li>
+<li><code>LOCAL_MODULE</code>: 定义模块的名称。这个名称将用于生成的共享库，上面就会生成libxhook.so。</li>
+<li><code>LOCAL_SRC_FILES</code>: 列出模块的源文件，可以是相对路径或绝对路径。</li>
+<li><code>LOCAL_C_INCLUDES</code>: 用于指定要包含的头文件目录路径。在构建本地代码时，编译器会搜索这些目录，以找到包含文件（header files）。</li>
+<li><code>LOCAL_CFLAGS</code>: 用于向编译器传递额外的编译选项。你可以使用它来设置预处理器宏、优化级别、警告控制等。<ul>
+<li>Wall: 启用所有常见的编译器警告。</li>
+<li>Wextra: 启用额外的警告，通常是一些更严格的代码检查。</li>
+<li>Werror: 将所有警告视为错误。这意味着任何警告都会使编译失败，确保代码没有潜在问题。</li>
+<li>fvisibility&#x3D;hidden: 设置默认的符号可见性为隐藏，这可以减少共享库的符号表大小并提高性能和安全性。</li>
+</ul>
+</li>
+<li><code>LOCAL_CONLYFLAGS</code>: 用于指定只应用于 C 语言文件的编译选项。它类似于 LOCAL_CFLAGS，但是只影响被编译为 C 语言的源文件，而不包括 C++ 文件。</li>
+<li><code>LOCAL_LDLIBS</code>: 是一个用于指定链接本地库的变量。它通常用于告诉链接器将特定的本地库链接到你的共享库（.so文件）中。<code>-llog</code> 是链接器标志，用于链接 Android 系统提供的 <code>liblog.so</code> 库。</li>
+<li><code>include $(BUILD_SHARED_LIBRARY)</code>: 用于告诉 Android NDK 构建系统生成一个共享库（.so 文件）。</li>
+</ul>
+<h3 id="Application-mk"><a href="#Application-mk" class="headerlink" title="Application.mk"></a>Application.mk</h3><p><code>Application.mk</code> 用于设置影响整个应用程序所有本地代码构建的全局选项。该文件允许你指定如下内容：</p>
+<ul>
+<li><code>APP_ABI</code>参数: 指定要构建的目标 ABI（Application Binary Interface）。ABI 决定了本地代码将如何与硬件和操作系统进行交互，例如 armeabi-v7a, arm64-v8a, x86, x86_64 等。</li>
+<li><code>APP_PLATFORM</code>平台版本: 指定 Android 平台的最低支持版本，例如 android-21、android-28 等。</li>
+<li><code>APP_STL</code>类型STL（标准模板库）: 指定 C++ 应该使用的 STL 类型，如 c++_shared（共享版的 GNU STL）或 c++_static（静态版的 GNU STL）等。</li>
+<li><code>NDK_TOOLCHAIN_VERSION</code> 编译器版本: 指定要使用的编译器版本，如 clang 或 gcc。</li>
+</ul>
+<p>xhook中的<code>Application.mk</code>文件如下所示：</p>
+<figure class="highlight mk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">APP_ABI      := armeabi armeabi-v7a arm64-v8a x86 x86_64</span><br><span class="line">APP_PLATFORM := android-19</span><br></pre></td></tr></table></figure>
+<p>armeabi 实际上是已经淘汰的架构，所以可以删掉。目前市场上主流的架构是armeabi-v7a arm64-v8a ，而对于x86的架构，虚拟机和电脑比较常用，所以在构建的时候也可以删掉。</p>
+<h1 id="接入到Android工程"><a href="#接入到Android工程" class="headerlink" title="接入到Android工程"></a>接入到Android工程</h1><p>通过<code>./build_libs.sh</code>指令生成了三个so包。</p>
+<ul>
+<li>libxhook.so 是 使用PLT进行hook的核心工具包。</li>
+<li>libtest.so 是我们要进行hook测试的so包。</li>
+<li>libbiz.so 是如何使用xhook对libtest.so进行hook的测试代码。</li>
+</ul>
+<p>.&#x2F;install_libs.sh 指令是将这三个so文件接入到xhookdemo的Android工程上去进行打包处理。我们删除对armeabi和x86的处理后执行一下脚本。</p>
+<h2 id="被hook的so"><a href="#被hook的so" class="headerlink" title="被hook的so"></a>被hook的so</h2><p>我们先看一下test.c中要被hook的代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;android/log.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="title function_">int</span> <span class="params">(*<span class="type">my_log_t</span>)</span><span class="params">(<span class="type">int</span> prio, <span class="type">const</span> <span class="type">char</span>* tag, <span class="type">const</span> <span class="type">char</span>* fmt, ...)</span>;</span><br><span class="line"><span class="type">my_log_t</span> my_global_log_ptr = (<span class="type">my_log_t</span>)__android_log_print;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> *<span class="title function_">new_thread_func</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    (<span class="type">void</span>)arg;</span><br><span class="line">    <span class="type">my_log_t</span> my_local_log_ptr2 = (<span class="type">my_log_t</span>)__android_log_print;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">my_log_t</span> my_local_log_ptr = (<span class="type">my_log_t</span>)__android_log_print;</span><br><span class="line">        __android_log_print(ANDROID_LOG_DEBUG, <span class="string">&quot;mytest&quot;</span>, <span class="string">&quot;call directly. %u\n&quot;</span>, i);</span><br><span class="line">        my_global_log_ptr(ANDROID_LOG_DEBUG, <span class="string">&quot;mytest&quot;</span>, <span class="string">&quot;call from global ptr. %u\n&quot;</span>, i);</span><br><span class="line">        my_local_log_ptr(ANDROID_LOG_DEBUG, <span class="string">&quot;mytest&quot;</span>, <span class="string">&quot;call from local ptr. %u\n&quot;</span>, i);</span><br><span class="line">        my_local_log_ptr2(ANDROID_LOG_DEBUG, <span class="string">&quot;mytest&quot;</span>, <span class="string">&quot;call from local ptr2. %u (definitely failed when compiled with -O0)\n&quot;</span>, i);</span><br><span class="line">        i++;</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Java_com_qiyi_test_NativeHandler_start</span><span class="params">(JNIEnv* env, jobject obj)</span></span><br><span class="line">&#123;</span><br><span class="line">    (<span class="type">void</span>)env;</span><br><span class="line">    (<span class="type">void</span>)obj;</span><br><span class="line">    </span><br><span class="line">    <span class="type">pthread_t</span> tid;</span><br><span class="line">    pthread_create(&amp;tid, <span class="literal">NULL</span>, &amp;new_thread_func, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码功能很简单，就是调用<code>__android_log_print</code>进行日志打印。而biz.c中要hook的就是这个<code>__android_log_print</code>函数。上述代码使用了四种调用方式。</p>
+<ul>
+<li>直接调用<code>__android_log_print</code></li>
+<li>新建了一个全局变量<code>my_global_log_ptr</code> 调用 <code>__android_log_print</code> 函数。</li>
+<li>通过局部变量 <code>my_local_log_ptr</code> 调用 <code>__android_log_print</code> 函数。</li>
+<li>通过另一个局部变量 <code>my_local_log_ptr2</code> 调用 __android_log_print 函数。</li>
+</ul>
+<p>可以看到，第四个调用添加了注释，如果使用-O0方式编译的话，hook会失败。这是怎么回事呢？</p>
+<p>GCC提供了多个优化级别选项，用于控制编译器在生成机器代码时对代码进行优化的程度。这些选项通常以 -O 开头，后面跟着数字或字母表示不同的优化级别。以下是常见的 GCC 编译器优化级别选项：</p>
+<ul>
+<li><code>-O0</code>: 无优化,编译器只进行基本的代码生成，不做任何优化。通常在开发和调试阶段使用，生成的代码结构与源代码几乎一致，便于理解和调试。</li>
+<li><code>-O1</code>: 基本优化。启用了一些基本的优化，如优化不必要的代码。在需要稍微提高性能但仍希望保持编译速度较快的情况下使用。</li>
+<li><code>-O2</code>: 中级优化。在 -O1 的基础上增加了更多的优化，如更强的循环优化和内联函数。发布版本时常用，可以提升程序的执行效率，但编译时间可能比 -O0 和 -O1 长。</li>
+<li><code>-O3</code>: 高级优化。比 -O2 更进一步的优化，可能包括更激进的指令调度和优化策略。对性能要求较高的程序，尽可能地提升程序的执行速度，但可能会增加编译时间和代码大小。</li>
+</ul>
+<p>除了基本的 -O 系列选项外，GCC 还提供了一些更细粒度的优化选项，如：</p>
+<ul>
+<li>-Os：优化代码大小，尽量减少生成的机器码大小，以节省内存空间。</li>
+<li>-Ofast：启用了 -O3 级别的优化，并允许非安全数学优化，可能导致数学计算的精度损失。</li>
+<li>-Og：专为调试目的设计的优化级别，保证了生成的代码能够方便调试，但效率略低于 -O1。</li>
+</ul>
+<p>因此：</p>
+<ul>
+<li>开发阶段：一般建议使用 -O0 或 -Og，这样生成的代码结构更接近源代码，便于调试和定位问题。</li>
+<li>发布阶段：根据程序的性能需求选择合适的优化级别，通常 -O2 或 -O3 可以提升程序的执行效率。</li>
+</ul>
+<p>对于上述的代码调用，如果使用-O0级别，第四种调用遍无法成功hook。因为在执行hook前，my_local_log_ptr2已经被赋值到临时变量中的外部函数的指针了。</p>
+<h2 id="执行hook的so"><a href="#执行hook的so" class="headerlink" title="执行hook的so"></a>执行hook的so</h2><p>如下为biz.c的代码文件，是执行hook是so源文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;android/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;xhook.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">my_system_log_print</span><span class="params">(<span class="type">int</span> prio, <span class="type">const</span> <span class="type">char</span>* tag, <span class="type">const</span> <span class="type">char</span>* fmt, ...)</span></span><br><span class="line">&#123;</span><br><span class="line">    va_list ap;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">1024</span>];</span><br><span class="line">    <span class="type">int</span> r;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">snprintf</span>(buf, <span class="keyword">sizeof</span>(buf), <span class="string">&quot;[%s] %s&quot;</span>, (<span class="literal">NULL</span> == tag ? <span class="string">&quot;&quot;</span> : tag), (<span class="literal">NULL</span> == fmt ? <span class="string">&quot;&quot;</span> : fmt));</span><br><span class="line"></span><br><span class="line">    va_start(ap, fmt);</span><br><span class="line">    r = __android_log_vprint(prio, <span class="string">&quot;xhook_system&quot;</span>, buf, ap);</span><br><span class="line">    va_end(ap);</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">my_libtest_log_print</span><span class="params">(<span class="type">int</span> prio, <span class="type">const</span> <span class="type">char</span>* tag, <span class="type">const</span> <span class="type">char</span>* fmt, ...)</span></span><br><span class="line">&#123;</span><br><span class="line">    va_list ap;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">1024</span>];</span><br><span class="line">    <span class="type">int</span> r;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">snprintf</span>(buf, <span class="keyword">sizeof</span>(buf), <span class="string">&quot;[%s] %s&quot;</span>, (<span class="literal">NULL</span> == tag ? <span class="string">&quot;&quot;</span> : tag), (<span class="literal">NULL</span> == fmt ? <span class="string">&quot;&quot;</span> : fmt));</span><br><span class="line"></span><br><span class="line">    va_start(ap, fmt);</span><br><span class="line">    r = __android_log_vprint(prio, <span class="string">&quot;xhook_libtest&quot;</span>, buf, ap);</span><br><span class="line">    va_end(ap);</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Java_com_qiyi_biz_NativeHandler_start</span><span class="params">(JNIEnv* env, jobject obj)</span></span><br><span class="line">&#123;</span><br><span class="line">    (<span class="type">void</span>)env;</span><br><span class="line">    (<span class="type">void</span>)obj;</span><br><span class="line"></span><br><span class="line">    xhook_register(<span class="string">&quot;^/system/.*\\.so$&quot;</span>,  <span class="string">&quot;__android_log_print&quot;</span>, my_system_log_print,  <span class="literal">NULL</span>);</span><br><span class="line">    xhook_register(<span class="string">&quot;^/vendor/.*\\.so$&quot;</span>,  <span class="string">&quot;__android_log_print&quot;</span>, my_system_log_print,  <span class="literal">NULL</span>);</span><br><span class="line">    xhook_register(<span class="string">&quot;.*/libtest\\.so$&quot;</span>, <span class="string">&quot;__android_log_print&quot;</span>, my_libtest_log_print, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//just for testing</span></span><br><span class="line">    xhook_ignore(<span class="string">&quot;.*/liblog\\.so$&quot;</span>, <span class="string">&quot;__android_log_print&quot;</span>); <span class="comment">//ignore __android_log_print in liblog.so</span></span><br><span class="line">    xhook_ignore(<span class="string">&quot;.*/libjavacore\\.so$&quot;</span>, <span class="literal">NULL</span>); <span class="comment">//ignore all hooks in libjavacore.so</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中，定义了两个函数：<code>my_system_log_print</code> 用来hook替换一些系统so的调用，<code>my_libtest_log_print</code> 用来替换<code>libtest.so</code>中的<code>__android_log_print</code>调用。使用起来非常简单。</p>
+<p>然后最后调用xhook_refresh 来真正生效hook。</p>
+<p>运行程序后，我们发现代码执行确实被替换了，证明hook生效了。</p>
+<h1 id="API-使用"><a href="#API-使用" class="headerlink" title="API 使用"></a>API 使用</h1><p>下面是xhook的api使用，直接搬运github给的说明了，比较详细。(xHook使用说明)[<a target="_blank" rel="noopener" href="https://github.com/iqiyi/xHook/blob/master/README.zh-CN.md]">https://github.com/iqiyi/xHook/blob/master/README.zh-CN.md]</a></p>
+<h2 id="注册hook"><a href="#注册hook" class="headerlink" title="注册hook"></a>注册hook</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">xhook_register</span><span class="params">(<span class="type">const</span> <span class="type">char</span>  *pathname_regex_str,  </span></span><br><span class="line"><span class="params">                   <span class="type">const</span> <span class="type">char</span>  *symbol,  </span></span><br><span class="line"><span class="params">                   <span class="type">void</span>        *new_func,  </span></span><br><span class="line"><span class="params">                   <span class="type">void</span>       **old_func)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在当前进程的内存空间中，在每一个符合正则表达式 <code>pathname_regex_str</code> 的已加载ELF中，每一个调用 <code>symbol</code> 的 PLT 入口点的地址值都将给替换成 <code>new_func</code>。之前的 PLT 入口点的地址值将被保存在 <code>old_func</code> 中。</li>
+<li>new_func 必须具有和原函数同样的函数声明。</li>
+<li>成功返回 0，失败返回 非0。</li>
+<li><code>pathname_regex_str</code> 只支持 POSIX BRE (Basic Regular Expression) 定义的正则表达式语法。</li>
+</ul>
+<h2 id="忽略部分-hook-信息"><a href="#忽略部分-hook-信息" class="headerlink" title="忽略部分 hook 信息"></a>忽略部分 hook 信息</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">xhook_ignore</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname_regex_str,  </span></span><br><span class="line"><span class="params">                 <span class="type">const</span> <span class="type">char</span> *symbol)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>根据 <code>pathname_regex_str</code> 和 <code>symbol</code>，从已经通过 <code>xhook_register</code> 注册的 hook 信息中，忽略一部分 hook 信息。如果 <code>symbol</code> 为 NULL，xhook 将忽略所有路径名符合正则表达式 pathname_regex_str 的 ELF。</li>
+<li>成功返回 0，失败返回 非0。</li>
+<li><code>pathname_regex_str</code> 只支持 POSIX BRE 定义的正则表达式语法。</li>
+</ul>
+<h2 id="执行-hook"><a href="#执行-hook" class="headerlink" title="执行 hook"></a>执行 hook</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">xhook_refresh</span><span class="params">(<span class="type">int</span> async)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>根据前面注册的 hook 信息，执行真正的 hook 操作。</li>
+<li>给 async 参数传 1 表示执行异步的 hook 操作，传 0 表示执行同步的 hook 操作。</li>
+<li>成功返回 0，失败返回 非0。</li>
+<li>xhook 在内部维护了一个全局的缓存，用于保存最后一次从 <code>/proc/self/maps</code> 读取到的 ELF 加载信息。每次一调用 xhook_refresh 函数，这个缓存都将被更新。xhook 使用这个缓存来判断哪些 ELF 是这次新被加载到内存中的。我们每次只需要针对这些新加载的 ELF 做 hook 就可以了。</li>
+</ul>
+<h2 id="清除缓存"><a href="#清除缓存" class="headerlink" title="清除缓存"></a>清除缓存</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">xhook_clear</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>清除 xhook 的缓存，重置所有的全局标示。</li>
+<li>如果你确定你需要的所有 PLT 入口点都已经被替换了，你可以调用这个函数来释放和节省一些内存空间。</li>
+</ul>
+<h2 id="启用-x2F-禁用-调试信息"><a href="#启用-x2F-禁用-调试信息" class="headerlink" title="启用&#x2F;禁用 调试信息"></a>启用&#x2F;禁用 调试信息</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">xhook_enable_debug</span><span class="params">(<span class="type">int</span> flag)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>给 flag 参数传 1 表示启用调试信息，传 0 表示禁用调试信息。 (默认为：禁用)</li>
+<li>调试信息将被输出到 logcat，对应的 TAG 为：xhook。</li>
+</ul>
+<h2 id="启用-x2F-禁用-SFP-段错误保护"><a href="#启用-x2F-禁用-SFP-段错误保护" class="headerlink" title="启用&#x2F;禁用 SFP (段错误保护)"></a>启用&#x2F;禁用 SFP (段错误保护)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">xhook_enable_sigsegv_protection</span><span class="params">(<span class="type">int</span> flag)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>给 flag 参数传 1 表示启用 SFP，传 0 表示禁用 SFP。 (默认为：启用)</li>
+<li>xhook 并不是一个常规的业务层的动态库。在 xhook 中，我们不得不直接计算一些内存指针的值。在一些极端的情况和环境下，读或者写这些指针指向的内存会发生段错误。根据我们的测试，xhook 的行为将导致 APP 崩溃率增加 “一千万分之一” (0.0000001)。（具体崩溃率可能会增加多少，也和你想要 hook 的库和符号有关）。最终，我们不得不使用某些方法来防止这些无害的崩溃。我们叫它SFP (段错误保护)，它是由这些调用和值组成的：sigaction()， SIGSEGV， siglongjmp() 和 sigsetjmp()。</li>
+<li>在 release 版本的 APP 中，你应该始终启用 SFP，这能防止你的 APP 因为 xhook 而崩溃。在 debug 版本的 APP 中，你应该始终禁用 SFP，这样你就不会丢失那些一般性的编码失误导致的段错误，这些段错误是应该被修复的。</li>
+</ul>
+<h2 id="使用举例"><a href="#使用举例" class="headerlink" title="使用举例"></a>使用举例</h2><p>如下为使用上的一些例子。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//监测内存泄露</span></span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;malloc&quot;</span>,  my_malloc,  <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;calloc&quot;</span>,  my_calloc,  <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;realloc&quot;</span>, my_realloc, <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;free&quot;</span>,    my_free,    <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//监控 sockets 生命周期</span></span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;getaddrinfo&quot;</span>, my_getaddrinfo, <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;socket&quot;</span>,      my_socket,      <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;setsockopt&quot;</span>   my_setsockopt,  <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;bind&quot;</span>,        my_bind,        <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;listen&quot;</span>,      my_listen,      <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;connect&quot;</span>,     my_connect,     <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;shutdown&quot;</span>,    my_shutdown,    <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;close&quot;</span>,       my_close,       <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//过滤出和保存部分安卓 log 到本地文件</span></span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;__android_log_write&quot;</span>,  my_log_write,  <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;__android_log_print&quot;</span>,  my_log_print,  <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;__android_log_vprint&quot;</span>, my_log_vprint, <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*\\.so$&quot;</span>, <span class="string">&quot;__android_log_assert&quot;</span>, my_log_assert, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//追踪某些调用 (忽略 linker 和 linker64)</span></span><br><span class="line">xhook_register(<span class="string">&quot;^/system/.*$&quot;</span>, <span class="string">&quot;mmap&quot;</span>,   my_mmap,   <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;^/vendor/.*$&quot;</span>, <span class="string">&quot;munmap&quot;</span>, my_munmap, <span class="literal">NULL</span>);</span><br><span class="line">xhook_ignore  (<span class="string">&quot;.*/linker$&quot;</span>,   <span class="string">&quot;mmap&quot;</span>);</span><br><span class="line">xhook_ignore  (<span class="string">&quot;.*/linker$&quot;</span>,   <span class="string">&quot;munmap&quot;</span>);</span><br><span class="line">xhook_ignore  (<span class="string">&quot;.*/linker64$&quot;</span>, <span class="string">&quot;mmap&quot;</span>);</span><br><span class="line">xhook_ignore  (<span class="string">&quot;.*/linker64$&quot;</span>, <span class="string">&quot;munmap&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//防御某些注入攻击</span></span><br><span class="line">xhook_register(<span class="string">&quot;.*com\\.hacker.*\\.so$&quot;</span>, <span class="string">&quot;malloc&quot;</span>,  my_malloc_always_return_NULL, <span class="literal">NULL</span>);</span><br><span class="line">xhook_register(<span class="string">&quot;.*/libhacker\\.so$&quot;</span>,     <span class="string">&quot;connect&quot;</span>, my_connect_with_recorder,     <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//修复某些系统 bug</span></span><br><span class="line">xhook_register(<span class="string">&quot;.*some_vendor.*/libvictim\\.so$&quot;</span>, <span class="string">&quot;bad_func&quot;</span>, my_nice_func, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//忽略 libwebviewchromium.so 的所有 hook 信息</span></span><br><span class="line">xhook_ignore(<span class="string">&quot;.*/libwebviewchromium.so$&quot;</span>, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//现在执行 hook!</span></span><br><span class="line">xhook_refresh(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io">icoderbin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://icoderbin.github.io/posts/10502/">https://icoderbin.github.io/posts/10502/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://icoderbin.github.io" target="_blank">icoderbin 的小站</a>！</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/css/icon.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/css/wechat.png" target="_blank"><img class="post-qr-code-img" src="/css/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/css/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/css/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/7896/" title="xhook源码分析之基于PLT进行hook的原理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">xhook源码分析之基于PLT进行hook的原理</div></div></a></div><div class="next-post pull-right"><a href="/posts/53992/" title="使用cmake进行多文件构建"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用cmake进行多文件构建</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E8%AF%91so"><span class="toc-number">1.</span> <span class="toc-text">编译so</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndk-build"><span class="toc-number">1.1.</span> <span class="toc-text">ndk-build</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-mk"><span class="toc-number">1.1.1.</span> <span class="toc-text">Android.mk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-mk"><span class="toc-number">1.1.2.</span> <span class="toc-text">Application.mk</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5%E5%88%B0Android%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">接入到Android工程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A2%ABhook%E7%9A%84so"><span class="toc-number">2.1.</span> <span class="toc-text">被hook的so</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8Chook%E7%9A%84so"><span class="toc-number">2.2.</span> <span class="toc-text">执行hook的so</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API-%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">API 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8Chook"><span class="toc-number">3.1.</span> <span class="toc-text">注册hook</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%BD%E7%95%A5%E9%83%A8%E5%88%86-hook-%E4%BF%A1%E6%81%AF"><span class="toc-number">3.2.</span> <span class="toc-text">忽略部分 hook 信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C-hook"><span class="toc-number">3.3.</span> <span class="toc-text">执行 hook</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E9%99%A4%E7%BC%93%E5%AD%98"><span class="toc-number">3.4.</span> <span class="toc-text">清除缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E7%94%A8-x2F-%E7%A6%81%E7%94%A8-%E8%B0%83%E8%AF%95%E4%BF%A1%E6%81%AF"><span class="toc-number">3.5.</span> <span class="toc-text">启用&#x2F;禁用 调试信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E7%94%A8-x2F-%E7%A6%81%E7%94%A8-SFP-%E6%AE%B5%E9%94%99%E8%AF%AF%E4%BF%9D%E6%8A%A4"><span class="toc-number">3.6.</span> <span class="toc-text">启用&#x2F;禁用 SFP (段错误保护)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-number">3.7.</span> <span class="toc-text">使用举例</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
