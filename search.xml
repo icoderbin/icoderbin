@@ -4,6 +4,66 @@
   
     
     <entry>
+      <title>android性能优化与性能监控集锦</title>
+      <link href="/posts/15065/"/>
+      <url>/posts/15065/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>android性能优化和性能监控是一个非常大的领域，牵涉到的相关技术也非常多，所以，根据个人的开发和性能优化经验，并结合目前市场上各种大大小小的开源库，总结了【android性能优化与性能监控集锦】系列，以便自己能够形成成系统的知识体系。</p></blockquote><p>后面所有性能监控与性能优化相关的总结，都会集合到这里，以便随时查询。</p><h4 id="冷启动监控与优化"><a href="#冷启动监控与优化" class="headerlink" title="冷启动监控与优化"></a>冷启动监控与优化</h4><ul><li><a href="/posts/8731/">Android冷启动优化–启动耗时检测</a></li><li><a href="/posts/30091/">Android冷启动优化–启动优化指导思想</a></li></ul><h4 id="ANR监控与优化"><a href="#ANR监控与优化" class="headerlink" title="ANR监控与优化"></a>ANR监控与优化</h4><ul><li><a href="/posts/12921/">Android关于ANR问题全解析</a></li><li><a href="/posts/46526/">腾讯Matrix关于ANR收集的源码解析</a></li></ul><h4 id="内存监控与优化"><a href="#内存监控与优化" class="headerlink" title="内存监控与优化"></a>内存监控与优化</h4><ul><li><a href="/posts/15086/">LeakCanary使用和源码分析</a></li></ul><h4 id="crash-监控与优化"><a href="#crash-监控与优化" class="headerlink" title="crash 监控与优化"></a>crash 监控与优化</h4><ul><li><a href="/posts/48099/">TransactionTooLargeException异常分析和工具建设</a></li><li><a href="/posts/43932/">Android Native异常捕获原理和xcrash源码分析</a></li></ul><h4 id="卡顿监控与优化"><a href="#卡顿监控与优化" class="headerlink" title="卡顿监控与优化"></a>卡顿监控与优化</h4><ul><li><a href="/posts/40243/">IPC调用问题排查</a></li><li><a href="/posts/6317/">android对ActivityManager进行Hook</a></li><li><a href="/posts/59156/">StrictMode使用</a></li></ul><h4 id="包大小优化"><a href="#包大小优化" class="headerlink" title="包大小优化"></a>包大小优化</h4><ul><li><a href="/posts/48022/">AndResGuard资源混淆源码学习</a></li><li><a href="/posts/572/">aab资源混淆利器AabResGuard源码分析</a></li></ul><h4 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h4><ul><li><a href="/posts/45852/">Android线程优化实践</a></li></ul><h4 id="大图监控"><a href="#大图监控" class="headerlink" title="大图监控"></a>大图监控</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 性能监控与优化 </category>
+          
+          <category> android性能优化与性能监控集锦 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 性能优化 </tag>
+            
+            <tag> 性能监控 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>音视频相关技术知识集锦</title>
+      <link href="/posts/37942/"/>
+      <url>/posts/37942/</url>
+      
+        <content type="html"><![CDATA[<h4 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h4><ul><li><a href="/posts/10632/">直播技术体系介绍</a></li></ul><h4 id="音视频采集"><a href="#音视频采集" class="headerlink" title="音视频采集"></a>音视频采集</h4><ul><li><a href="/posts/39987/">Camera API基本使用</a></li><li><a href="/posts/20479/">Camera2基本使用</a></li><li><a href="/posts/60056/">Camera2使用ImageReader获取视频流</a></li></ul><h4 id="音视频预览"><a href="#音视频预览" class="headerlink" title="音视频预览"></a>音视频预览</h4><ul><li><a href="/posts/42258/">使用SurfaceView和EGL进行预览和录制视频</a></li><li><a href="/posts/24007/">使用TextureView预览画面</a></li><li><a href="/posts/1578/">YUV数据格式介绍</a></li></ul><h4 id="音视频编解码"><a href="#音视频编解码" class="headerlink" title="音视频编解码"></a>音视频编解码</h4><ul><li><a href="/posts/19886/">MediaCodec使用一（音视频播放）</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频 </category>
+          
+          <category> 音视频相关技术知识集锦 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 音视频 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Android关于ANR问题全解析</title>
       <link href="/posts/12921/"/>
       <url>/posts/12921/</url>
@@ -135,7 +195,7 @@
       
       <categories>
           
-          <category> 开源库 </category>
+          <category> 性能监控与优化 </category>
           
           <category> aab资源混淆利器AabResGuard源码分析 </category>
           
@@ -144,9 +204,9 @@
       
         <tags>
             
-            <tag> 开源库 </tag>
-            
             <tag> AabResGuard </tag>
+            
+            <tag> 性能监控与优化 </tag>
             
         </tags>
       
@@ -164,7 +224,7 @@
       
       <categories>
           
-          <category> 开源库 </category>
+          <category> 性能监控与优化 </category>
           
           <category> AndResGuard资源混淆源码学习 </category>
           
@@ -173,9 +233,9 @@
       
         <tags>
             
-            <tag> 开源库 </tag>
-            
             <tag> AndResGuard </tag>
+            
+            <tag> 性能监控与优化 </tag>
             
         </tags>
       
@@ -503,68 +563,6 @@
     
     
     <entry>
-      <title>android性能优化与性能监控集锦</title>
-      <link href="/posts/15065/"/>
-      <url>/posts/15065/</url>
-      
-        <content type="html"><![CDATA[<blockquote><p>android性能优化和性能监控是一个非常大的领域，牵涉到的相关技术也非常多，所以，根据个人的开发和性能优化经验，并结合目前市场上各种大大小小的开源库，总结了【android性能优化与性能监控集锦】系列，以便自己能够形成成系统的知识体系。</p></blockquote><p>后面所有性能监控与性能优化相关的总结，都会集合到这里，以便随时查询。</p><h4 id="冷启动监控与优化"><a href="#冷启动监控与优化" class="headerlink" title="冷启动监控与优化"></a>冷启动监控与优化</h4><ul><li><a href="/posts/34714/">Android冷启动耗时统计方案</a></li><li><a href="/posts/24279/">Android冷启动优化方案实践</a> – todo</li></ul><h4 id="ANR监控与优化"><a href="#ANR监控与优化" class="headerlink" title="ANR监控与优化"></a>ANR监控与优化</h4><ul><li><a href="/posts/12921/">Android关于ANR问题全解析</a></li></ul><h4 id="内存监控与优化"><a href="#内存监控与优化" class="headerlink" title="内存监控与优化"></a>内存监控与优化</h4><p><a href="/posts/15086/">LeakCanary使用和源码分析</a></p><h4 id="crash-监控与优化"><a href="#crash-监控与优化" class="headerlink" title="crash 监控与优化"></a>crash 监控与优化</h4><ul><li><a href="/posts/48099/">TransactionTooLargeException异常分析和工具建设</a></li><li><a href="/posts/43932/">Android Native异常捕获原理和xcrash源码分析</a></li></ul><h4 id="卡顿监控与优化"><a href="#卡顿监控与优化" class="headerlink" title="卡顿监控与优化"></a>卡顿监控与优化</h4><ul><li><a href="/posts/40243/">IPC调用问题排查</a></li><li><a href="/posts/6317/">android对ActivityManager进行Hook</a></li><li><a href="/posts/59156/">StrictMode使用</a></li></ul><h4 id="包大小优化"><a href="#包大小优化" class="headerlink" title="包大小优化"></a>包大小优化</h4><p>代码混淆与资源混淆</p><h4 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h4><ul><li><a href="/posts/45852/">Android线程优化实践</a></li></ul><h4 id="大图监控"><a href="#大图监控" class="headerlink" title="大图监控"></a>大图监控</h4>]]></content>
-      
-      
-      <categories>
-          
-          <category> 性能监控与优化 </category>
-          
-          <category> android性能优化与性能监控集锦 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Android </tag>
-            
-            <tag> 性能优化 </tag>
-            
-            <tag> 性能监控 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Android冷启动耗时统计方案</title>
-      <link href="/posts/34714/"/>
-      <url>/posts/34714/</url>
-      
-        <content type="html"><![CDATA[<h1 id="启动类型"><a href="#启动类型" class="headerlink" title="启动类型"></a>启动类型</h1><p>Android 可以划分多种启动方式，如下：</p><h2 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h2><p>冷启动是指系统中不存在当前APP的进程，即APP的进程被完全杀死或者从来没启动过。此时APP启动需要经历如下的阶段：</p><ol><li>点击桌面图标开始启动APP。</li><li>app 启动后会第一时间显示一个空白的Window</li><li>创建APP的进程</li><li>创建Application对象</li><li>启动主进程的ActivityThread</li><li>创建MainActivity</li><li>渲染视图；</li><li>执行onLayout；</li><li>执行onDraw</li><li>完成第一次绘制后，把mainActivity替换已经展示的BackgroundWindow，即空白window。</li></ol><h2 id="热启动"><a href="#热启动" class="headerlink" title="热启动"></a>热启动</h2><p>当我们按Home键返回桌面，或者来电接听等操作后，APP被切换到后台，这个时候重新启动APP的过程是热启动。</p><p>在热启动的过程中，进程不用重新创建，之前的Activity会被自动带进前台，不用进行重新的渲染和绘制工作。当然如果因为系统内存不足而导致Activity被回收，那么Activity是需要重新进行创建和绘制等操作的。</p><h2 id="温启动"><a href="#温启动" class="headerlink" title="温启动"></a>温启动</h2><p>温启动则是APP的进程还在，但是所有的Activity都被销毁了。因此温启动的时候不需要重新创建进程，但是需要重新创建Activity。</p><p>温启动的主要场景如下：</p><ul><li>用户按连续按返回退出了app，然后重新启动app。</li><li>由于系统收回了app的内存，然后重新启动app。</li></ul><blockquote><p>总结起来就是说：</p><ul><li>冷启动需要重新创建进程、Application、Activity，会调用Application的onCreate()方法。</li><li>温启动不需要重新创建进程、Application，需要重新创建Activity，所以不会再调用Application的onCreate()方法。</li><li>热启动不需要重新创建进程、Application、Activity，正常情况下Activity也不会重新渲染绘制，但是如果因内存不足而导致当前Activity被回收，则需要重新创建当前Activity。</li></ul></blockquote><h1 id="冷启动耗时"><a href="#冷启动耗时" class="headerlink" title="冷启动耗时"></a>冷启动耗时</h1><h2 id="开始时间"><a href="#开始时间" class="headerlink" title="开始时间"></a>开始时间</h2><p>冷启动耗时检测可以自定义起始位置或者以进程创建的时间作为起点。</p><p>从业务和性能优化层面来说，可以以Application的构造函数为起点，因为在这之前的操作都由系统调用完成，单个APP无法控制。但如果从用户体验的角度来说，也就是如果冷启动耗时监控想要拿到的是用户真实的使用体验，那么则可以以进程开始创建作为起点。</p><p>Android 7 以上的设备可以直接通过<code>Process.getStartElapsedRealtime()</code> 获取进程的创建时间，这个时间是通过SystemClock.elapsedRealtime()获取的，即自开机后经过的时间，计算机在进行深度睡眠的时候的时间也计算在内，单位是ns，换算成ms需要 &#x2F;1000000。</p><p>另一种方式可以通过解析<code>/proc/self/stat</code> 文件来获取进程创建的时间，这个不受版本限制，因此会更加通用。<code>/proc/self/stat</code> 文件的文件结构可参考<a href="https://blog.csdn.net/cybertan/article/details/7596633">PROC系列之—&#x2F;proc&#x2F;pid&#x2F;stat</a>。</p><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Android 7 以上获取进程创建时间</span></span><br><span class="line">Process.getStartElapsedRealtime()</span><br><span class="line"><span class="comment">// Android 7 以下获取进程创建时间</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getProcessStartTime</span><span class="params">()</span></span>: <span class="built_in">Long</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 如果是7.0以下的设配，可以读取系统/proc/self/stat文件里的数据来拿到启动时间</span></span><br><span class="line">        <span class="keyword">val</span> processStatusReader = BufferedReader(</span><br><span class="line">            InputStreamReader(</span><br><span class="line">                FileInputStream(<span class="string">&quot;/proc/self/stat&quot;</span>)</span><br><span class="line">            ), <span class="number">1000</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">val</span> processStatus = processStatusReader.readLine()</span><br><span class="line">        processStatusReader.close()</span><br><span class="line">        <span class="keyword">val</span> statSegments = processStatus.split(<span class="string">&quot; &quot;</span>.toRegex()).dropLastWhile &#123; it.isEmpty() &#125;</span><br><span class="line">            .toTypedArray()</span><br><span class="line">        <span class="keyword">if</span> (statSegments.size &gt; <span class="number">21</span> &amp;&amp; statSegments[<span class="number">0</span>] == Process.myPid().toString()) &#123;</span><br><span class="line">            <span class="keyword">val</span> startElapsedSegment = statSegments[<span class="number">21</span>]</span><br><span class="line">            <span class="keyword">return</span> startElapsedSegment.toLong() * <span class="number">10</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: Exception) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>获取进程开始时间后，在自定义的结束时间通过 (SystemClock.elapsedRealtime() - startTime) &#x2F; 1000000得到冷启动的耗时。</p><h2 id="结束时间"><a href="#结束时间" class="headerlink" title="结束时间"></a>结束时间</h2><p>冷启动的结束时间目前通常使用的结束节点如下所示；</p><h3 id="onWindowFocusChanged"><a href="#onWindowFocusChanged" class="headerlink" title="onWindowFocusChanged()"></a>onWindowFocusChanged()</h3><p>当Activity的当前Window获取或失去焦点时，会调用这个方法。一般启动Activity后，在onCreate()、onStart()、onResume()获取到的View宽高都是0，但是在onWindowFocusChanged()方法中就可以获取到View的真实宽高了。而且onWindowFocusChanged()是在第一帧渲染完成后,因此该方法调用时，Window处于完全可见的状态。</p><h3 id="ViewTreeObserver-监控"><a href="#ViewTreeObserver-监控" class="headerlink" title="ViewTreeObserver 监控"></a>ViewTreeObserver 监控</h3><p>android 的 UI 布局由View 和 ViewGroup组成，View和ViewGroup以树形结构进行组织，形成视图树ViewTree。而<code>ViewTreeObserver</code> 便是监听视图树发生各种变化的工具。<code>ViewTreeObserver</code> 不能被外部实例化，只能通过<code>android.view.View#getViewTreeObserver()</code>的方式获取。<code>ViewTreeObserver</code>添加的监听有如下这些：</p><table><thead><tr><th>接口</th><th>监听的功能</th></tr></thead><tbody><tr><td>OnWindowAttachListener</td><td>当 视图树 attach到Window 或者 从Window detach时调用</td></tr><tr><td>OnWindowFocusChangeListener</td><td>当窗口的焦点状态发生变化时调用</td></tr><tr><td>OnGlobalFocusChangeListener</td><td>当视图树中的View的焦点发生变化</td></tr><tr><td>OnGlobalLayoutListener</td><td>当视图树中的View onLayout调用完成时调用</td></tr><tr><td>OnPreDrawListener</td><td>当视图树的View开始绘制前调用</td></tr><tr><td>OnDrawListener</td><td>当视图树的View绘制完成时调用</td></tr><tr><td>OnScrollChangedListener</td><td>当视图树中的元素发生滚动时调用</td></tr><tr><td>OnTouchModeChangeListener</td><td>当视图树的触摸模式发生变化时调用</td></tr></tbody></table><p>下面是通过日志打印来看一下Activity的生命周期、View的生命周期和ViewTreeObserver生命周期之间的关系。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.038</span> activity-onCreate</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.049</span> activity-onStart</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.049</span> activity-onResume</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.056</span> CustomTextView-onAttachedToWindow</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.056</span> viewTreeObserver-onWindowAttached</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.058</span> CustomTextView-onMeasure</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> CustomTextView-onMeasure</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> CustomTextView-onLayout</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> viewTreeObserver-onGlobalLayout</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> viewTreeObserver-onPreDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.065</span> viewTreeObserver-onDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.065</span> CustomTextView-onDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.069</span> activity-onWindowFocusChanged,<span class="literal">true</span></span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.069</span> viewTreeObserver-onWindowFocusChange</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.091</span> viewTreeObserver-onGlobalLayout</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.091</span> viewTreeObserver-onPreDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.091</span> viewTreeObserver-onDraw</span><br></pre></td></tr></table></figure><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>冷启动的开始时间可以有两种方案：</p><ul><li>进程的启动时间。但是从进程启动到Application的attachBaseContext的过程我们无法控制，所以这个阶段对我们做性能优化作用不大。</li><li>Application的attachBaseContext开始。这个虽然相比真实的启动时长会小一些，但是对我们最性能优化是比较有帮助的。</li></ul><p>冷启动的结束时间可以通过两种方案监控</p><ul><li>onWindowFocusChanged 当Window获取焦点的时候</li><li>ViewTreeObserver的OnDrawListener的时候，表示绘制第一帧。</li></ul><h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul><li><a href="https://juejin.cn/post/6932357496023547917">App三种启动场景：冷启动、热启动、温启动</a></li><li><a href="https://henleylee.github.io/posts/2020/57966f8d.html">Android ViewTreeObserver 原理详解</a></li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> 性能监控与优化 </category>
-          
-          <category> Android冷启动耗时统计方案 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Android </tag>
-            
-            <tag> 性能优化 </tag>
-            
-            <tag> 冷启动优化 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>LeakCanary使用和源码分析</title>
       <link href="/posts/15086/"/>
       <url>/posts/15086/</url>
@@ -615,6 +613,68 @@
             <tag> Android </tag>
             
             <tag> IPC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android冷启动优化--启动耗时检测</title>
+      <link href="/posts/8731/"/>
+      <url>/posts/8731/</url>
+      
+        <content type="html"><![CDATA[<h1 id="启动类型"><a href="#启动类型" class="headerlink" title="启动类型"></a>启动类型</h1><p>Android 可以划分多种启动方式，如下：</p><h2 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h2><p>冷启动是指系统中不存在当前APP的进程，即APP的进程被完全杀死或者从来没启动过。此时APP启动需要经历如下的阶段：</p><ol><li>点击桌面图标开始启动APP。</li><li>app 启动后会第一时间显示一个空白的Window</li><li>创建APP的进程</li><li>创建Application对象</li><li>启动主进程的ActivityThread</li><li>创建MainActivity</li><li>渲染视图；</li><li>执行onLayout；</li><li>执行onDraw</li><li>完成第一次绘制后，把mainActivity替换已经展示的BackgroundWindow，即空白window。</li></ol><h2 id="热启动"><a href="#热启动" class="headerlink" title="热启动"></a>热启动</h2><p>当我们按Home键返回桌面，或者来电接听等操作后，APP被切换到后台，这个时候重新启动APP的过程是热启动。</p><p>在热启动的过程中，进程不用重新创建，之前的Activity会被自动带进前台，不用进行重新的渲染和绘制工作。当然如果因为系统内存不足而导致Activity被回收，那么Activity是需要重新进行创建和绘制等操作的。</p><h2 id="温启动"><a href="#温启动" class="headerlink" title="温启动"></a>温启动</h2><p>温启动则是APP的进程还在，但是所有的Activity都被销毁了。因此温启动的时候不需要重新创建进程，但是需要重新创建Activity。</p><p>温启动的主要场景如下：</p><ul><li>用户按连续按返回退出了app，然后重新启动app。</li><li>由于系统收回了app的内存，然后重新启动app。</li></ul><blockquote><p>总结起来就是说：</p><ul><li>冷启动需要重新创建进程、Application、Activity，会调用Application的onCreate()方法。</li><li>温启动不需要重新创建进程、Application，需要重新创建Activity，所以不会再调用Application的onCreate()方法。</li><li>热启动不需要重新创建进程、Application、Activity，正常情况下Activity也不会重新渲染绘制，但是如果因内存不足而导致当前Activity被回收，则需要重新创建当前Activity。</li></ul></blockquote><h1 id="冷启动耗时"><a href="#冷启动耗时" class="headerlink" title="冷启动耗时"></a>冷启动耗时</h1><h2 id="开始时间"><a href="#开始时间" class="headerlink" title="开始时间"></a>开始时间</h2><p>冷启动耗时检测可以自定义起始位置或者以进程创建的时间作为起点。</p><p>从业务和性能优化层面来说，可以以Application的构造函数为起点，因为在这之前的操作都由系统调用完成，单个APP无法控制。但如果从用户体验的角度来说，也就是如果冷启动耗时监控想要拿到的是用户真实的使用体验，那么则可以以进程开始创建作为起点。</p><p>Android 7 以上的设备可以直接通过<code>Process.getStartElapsedRealtime()</code> 获取进程的创建时间，这个时间是通过SystemClock.elapsedRealtime()获取的，即自开机后经过的时间，计算机在进行深度睡眠的时候的时间也计算在内，单位是ns，换算成ms需要 &#x2F;1000000。</p><p>另一种方式可以通过解析<code>/proc/self/stat</code> 文件来获取进程创建的时间，这个不受版本限制，因此会更加通用。<code>/proc/self/stat</code> 文件的文件结构可参考<a href="https://blog.csdn.net/cybertan/article/details/7596633">PROC系列之—&#x2F;proc&#x2F;pid&#x2F;stat</a>。</p><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Android 7 以上获取进程创建时间</span></span><br><span class="line">Process.getStartElapsedRealtime()</span><br><span class="line"><span class="comment">// Android 7 以下获取进程创建时间</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getProcessStartTime</span><span class="params">()</span></span>: <span class="built_in">Long</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 如果是7.0以下的设配，可以读取系统/proc/self/stat文件里的数据来拿到启动时间</span></span><br><span class="line">        <span class="keyword">val</span> processStatusReader = BufferedReader(</span><br><span class="line">            InputStreamReader(</span><br><span class="line">                FileInputStream(<span class="string">&quot;/proc/self/stat&quot;</span>)</span><br><span class="line">            ), <span class="number">1000</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">val</span> processStatus = processStatusReader.readLine()</span><br><span class="line">        processStatusReader.close()</span><br><span class="line">        <span class="keyword">val</span> statSegments = processStatus.split(<span class="string">&quot; &quot;</span>.toRegex()).dropLastWhile &#123; it.isEmpty() &#125;</span><br><span class="line">            .toTypedArray()</span><br><span class="line">        <span class="keyword">if</span> (statSegments.size &gt; <span class="number">21</span> &amp;&amp; statSegments[<span class="number">0</span>] == Process.myPid().toString()) &#123;</span><br><span class="line">            <span class="keyword">val</span> startElapsedSegment = statSegments[<span class="number">21</span>]</span><br><span class="line">            <span class="keyword">return</span> startElapsedSegment.toLong() * <span class="number">10</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: Exception) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>获取进程开始时间后，在自定义的结束时间通过 (SystemClock.elapsedRealtime() - startTime) &#x2F; 1000000得到冷启动的耗时。</p><h2 id="结束时间"><a href="#结束时间" class="headerlink" title="结束时间"></a>结束时间</h2><p>冷启动的结束时间目前通常使用的结束节点如下所示；</p><h3 id="onWindowFocusChanged"><a href="#onWindowFocusChanged" class="headerlink" title="onWindowFocusChanged()"></a>onWindowFocusChanged()</h3><p>当Activity的当前Window获取或失去焦点时，会调用这个方法。一般启动Activity后，在onCreate()、onStart()、onResume()获取到的View宽高都是0，但是在onWindowFocusChanged()方法中就可以获取到View的真实宽高了。而且onWindowFocusChanged()是在第一帧渲染完成后,因此该方法调用时，Window处于完全可见的状态。</p><h3 id="ViewTreeObserver-监控"><a href="#ViewTreeObserver-监控" class="headerlink" title="ViewTreeObserver 监控"></a>ViewTreeObserver 监控</h3><p>android 的 UI 布局由View 和 ViewGroup组成，View和ViewGroup以树形结构进行组织，形成视图树ViewTree。而<code>ViewTreeObserver</code> 便是监听视图树发生各种变化的工具。<code>ViewTreeObserver</code> 不能被外部实例化，只能通过<code>android.view.View#getViewTreeObserver()</code>的方式获取。<code>ViewTreeObserver</code>添加的监听有如下这些：</p><table><thead><tr><th>接口</th><th>监听的功能</th></tr></thead><tbody><tr><td>OnWindowAttachListener</td><td>当 视图树 attach到Window 或者 从Window detach时调用</td></tr><tr><td>OnWindowFocusChangeListener</td><td>当窗口的焦点状态发生变化时调用</td></tr><tr><td>OnGlobalFocusChangeListener</td><td>当视图树中的View的焦点发生变化</td></tr><tr><td>OnGlobalLayoutListener</td><td>当视图树中的View onLayout调用完成时调用</td></tr><tr><td>OnPreDrawListener</td><td>当视图树的View开始绘制前调用</td></tr><tr><td>OnDrawListener</td><td>当视图树的View绘制完成时调用</td></tr><tr><td>OnScrollChangedListener</td><td>当视图树中的元素发生滚动时调用</td></tr><tr><td>OnTouchModeChangeListener</td><td>当视图树的触摸模式发生变化时调用</td></tr></tbody></table><p>下面是通过日志打印来看一下Activity的生命周期、View的生命周期和ViewTreeObserver生命周期之间的关系。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.038</span> activity-onCreate</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.049</span> activity-onStart</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.049</span> activity-onResume</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.056</span> CustomTextView-onAttachedToWindow</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.056</span> viewTreeObserver-onWindowAttached</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.058</span> CustomTextView-onMeasure</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> CustomTextView-onMeasure</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> CustomTextView-onLayout</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> viewTreeObserver-onGlobalLayout</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.064</span> viewTreeObserver-onPreDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.065</span> viewTreeObserver-onDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.065</span> CustomTextView-onDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.069</span> activity-onWindowFocusChanged,<span class="literal">true</span></span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.069</span> viewTreeObserver-onWindowFocusChange</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.091</span> viewTreeObserver-onGlobalLayout</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.091</span> viewTreeObserver-onPreDraw</span><br><span class="line"><span class="number">18</span>:<span class="number">16</span>:<span class="number">44.091</span> viewTreeObserver-onDraw</span><br></pre></td></tr></table></figure><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>冷启动的开始时间可以有两种方案：</p><ul><li>进程的启动时间。但是从进程启动到Application的attachBaseContext的过程我们无法控制，所以这个阶段对我们做性能优化作用不大。</li><li>Application的attachBaseContext开始。这个虽然相比真实的启动时长会小一些，但是对我们最性能优化是比较有帮助的。</li></ul><p>冷启动的结束时间可以通过两种方案监控</p><ul><li>onWindowFocusChanged 当Window获取焦点的时候</li><li>ViewTreeObserver的OnDrawListener的时候，表示绘制第一帧。</li></ul><h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul><li><a href="https://juejin.cn/post/6932357496023547917">App三种启动场景：冷启动、热启动、温启动</a></li><li><a href="https://henleylee.github.io/posts/2020/57966f8d.html">Android ViewTreeObserver 原理详解</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 性能监控与优化 </category>
+          
+          <category> Android冷启动优化--启动耗时检测 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 性能优化 </tag>
+            
+            <tag> 冷启动优化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Android冷启动优化--启动优化指导思想</title>
+      <link href="/posts/30091/"/>
+      <url>/posts/30091/</url>
+      
+        <content type="html"><![CDATA[<p>Android冷启动性能是一个非常重要的指标，能够直接影响到用户的留存率。因此如何将用户的冷启动耗时降到尽可能低，是性能优化的重中之重。</p><p>本篇文章为冷启动优化提供系统性的理论总结，后续的文章则对冷启动优化做具体的实践。</p><h1 id="启动流程"><a href="#启动流程" class="headerlink" title="启动流程"></a>启动流程</h1><p>从<a href="/posts/8731/">Android冷启动优化–启动耗时检测</a> 这篇文章中，我们可能知道，冷启动优化是要尽量减少从<code>Application#attachBaseContext()</code>到 UI 第一帧绘制完成的时间。因此了解整个启动流程都在做什么事情，是非常重要的。</p><p>按照主线程的调用任务，可以将启动阶段分为以下过程：</p><ul><li><code>Application#attachBaseContext()</code> 调用</li><li><code>install Provider</code>调用。</li><li><code>Application#onCreate()</code>调用。</li><li>Activity生命周期调用。</li><li>View的加载、创建、测量、布局、渲染的过程。</li></ul><p>前三个可以称之为Application阶段的初始化工作，最后两个可以成为Activity阶段的加载工作。</p><h1 id="Application阶段优化思路"><a href="#Application阶段优化思路" class="headerlink" title="Application阶段优化思路"></a>Application阶段优化思路</h1><ul><li>Application#attachBaseContext() 是我们能够最早接触到的业务代码调用，也是我们能够最早能够添加初始化任务的地方。</li><li>installProvider阶段，一小部分第三方 sdk 借助该时机来做初始化操作，有时候第三方的初始化操作会比较耗时，导致影响当前的冷启动时间，因此可以进行具体情况具体分析。</li><li>Application#onCreate() 是很多第三方库进行初始化的阶段，这个阶段会添加很多sdk的初始化任务，而这些任务的特性差异比较大，因此onCreate()阶段的任务分析和调度是我们进行冷启动优化的重点。我们可以通过异步、任务重排、延时加载、提前加载等 手段来实现onCreate()阶段的快速执行。</li></ul><p>上面是Applicaton阶段的三个主要的主线程路径。Application主要进行各种初始化操作，而这些初始化各有其特点，我们需要针对这些特点分而治之。比如说是否必要在主线程执行、是否必要在启动阶段执行、是否依赖Context等。因此针对各个初始化工作我们可以大致做如下处理：</p><ul><li>对于不必要在主线程执行的任务，在子线程执行。</li><li>对于不必要在启动阶段执行的任务，在启动以后执行。</li><li>对于不依赖Context的任务，可以在attachBaseContext()阶段前置加载。</li></ul><p>另外需要关注上述优化所引发的一些性能退化:</p><ul><li>子线程任务并发过多，是否会导致抢占了CPU资源，从而导致主线程占用CPU资源减少使得启动反而变慢。</li><li>不必要在启动阶段就执行的任务延迟到启动以后执行时，启动以后可能会并发大量的任务，大量的任务可能导致启动后APP卡顿、首屏fps下降等问题。</li></ul><p>如何把握任务调度的分寸，使得在冷启动耗时降低的情况下，其他指标不发生劣化是我们需要在优化过程中重点关注的问题。</p><blockquote><p>在Application阶段，虽然主线程基本上一直在执行任务，但是正在执行的子线程的数量是不相同的。因此如何在CPU不繁忙的时候增加一些子线程的执行，然后在CPU繁忙的时候减少一些子线程的执行是一个很好的优化方向。从实践的优化结果上来看，在这个方向上对冷启动耗时的优化有一个非常显著的结果。</p></blockquote><h1 id="Activity-阶段优化思路"><a href="#Activity-阶段优化思路" class="headerlink" title="Activity 阶段优化思路"></a>Activity 阶段优化思路</h1><p>Activity 阶段主要执行的就是Activity的生命周期，View的创建、布局和绘制等操作。</p><p>关于优化Activity的声明周期，可以有如下方向的努力：</p><ul><li>闪屏页不要用Activity而是用Fragment，因为Fragment相比Activity创建和执行的成本要小得多。</li><li>生命周期中尽量减少任务的执行，让Activity 启动的更快一些。</li><li>将一些能够在子线程执行的任务尽量放到子线程中执行。</li><li>并发的子线程数量不能太多，以防止子线程抢占CPU资源而影响主线程的执行。</li><li>主线程用到的一些加载比较慢的数据、类、so等，可以提前放到Application 阶段的子线程中提前去加载，这样用的时候就不占用主线程资源。</li><li>减少主线程路径上的跨进程调用，不管是调用系统的Service还是自定义的Service，跨进程调用都会有可能导致主线程的block，造成资源浪费。</li></ul><p>关于View的创建、布局和绘制方向，我们可以考虑在下面的策略下努力尝试：</p><ul><li>首页xml异步加载</li><li>利用X2C提升View加载效率</li><li>初始加载布局时，对一些不显示的布局可以使用ViewStub占位，以减轻View渲染的压力。</li><li>对View层进进行优化。</li></ul><h1 id="全局优化思路"><a href="#全局优化思路" class="headerlink" title="全局优化思路"></a>全局优化思路</h1><p>全局优化是指并不局限于哪个执行阶段的优化。我们可以考虑一下，为什么我们的APP冷启动很耗时，使用起来很卡顿？可以做一个简单解释便是 CPU无法及时执行我们需要它执行的任务。那么为什么CPU无法及时响应我们的任务呢？原因无外乎以下几种。</p><ul><li>系统开启了太多APP，分配给自己APP的CPU时间太少，所以无法及时响应。</li><li>自己APP中的任务太多，CPU执行不过来，需要排很长的队。</li><li>自己APP中任务安排不合理，有时候CPU很空闲，有时候CPU又特别忙，导致CPU使用效率不高。</li><li>同时并发执行的线程数量太多，CPU要不断的切换，导致产生了大量的切换成本。</li><li>一些任务本不需要在主线程执行的，仍然在主线程执行了，导致影响用户交互。</li><li>一个大型任务有部分可以在主线程，有部分可以在子线程，但是为了省事将所有的任务都压在主线程执行，影响交互。</li><li>…</li></ul><p>等等的这些原因，都需要我们深入的考虑一下，如何合理的安排我们的任务。</p><ul><li>不必要执行的任务是否可以先不执行。 <strong>— 使用懒加载</strong></li><li>不必要在主线程的任务是否可以放在子线程。  <strong>— 主线程减负</strong></li><li>此阶段不需要执行的任务是否可以放到后续CPU不忙的阶段。  <strong>— 任务延迟加载</strong></li><li>CPU当前不忙，是否可以提前加载一下后面马上要使用到数据。  <strong>— 数据提前加载</strong></li></ul><h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><p>工欲善其事必先利其器，因此有合适的性能分析工具对冷启动优化将会有非常好的助力。</p><h2 id="线下工具"><a href="#线下工具" class="headerlink" title="线下工具"></a>线下工具</h2><p>目前线下的性能分析工具也是多种多样的。</p><h3 id="方法耗时检测"><a href="#方法耗时检测" class="headerlink" title="方法耗时检测"></a>方法耗时检测</h3><p>方法耗时检测顾名思义是用来检测方法耗时的，在编译期间，可以通过ASM插桩技术，对Java中的每个方法调用的开始和结束插桩调用，统计方法的开始时间和结束时间，生成Trace文件，解析Trace文件生成方法耗时的Trace图，从而能够分析出各个线程方法的执行情况。</p><p>通过插桩统计方法调用耗时进行性能分析时，有自己的优缺点。</p><p><strong>优点</strong></p><ul><li>方法耗时检测插件逻辑实现简单，且目前github有许多开源代码可以直接拿来做修改。</li><li>能够看到所有方法的调用情况，所以能够比较方便的查看高耗时方法，比较方便的查看频繁的方法调用。</li><li>生成的Trace文件结合chrome:&#x2F;&#x2F;tracing 来查看非常的直观方便。</li></ul><p><strong>缺点</strong></p><ul><li>内联函数插桩后就变成非内联的了，编译优化无法更有效的完成工作。</li><li>影响打包效率，针对所有方法的插桩在一定程度上会影响构建apk的速度。</li><li>影响包大小，插桩所有方法后，整个apk的大小会变大不少。</li><li>严重影响运行性能。因为对每个方法都要统计，所以会导致方法执行变慢，这也是该方案不能在线上使用的一个重要原因。</li></ul><p>针对方法耗时检测插件所存在的缺点，字节通过白名单的方式过滤方法插桩，只针对一些有耗时可能性的方法进行插桩，能够减少90%的插桩量。可参考如下文章：<a href="https://mp.weixin.qq.com/s/ZMkj-VvG5sFfTCfIcFa4mg">抖音 ANR 自动归因平台建设实践</a></p><blockquote><p>对于抖音这样的大型应用来说，插桩方案也会有一些弊端，当插桩的函数过多时，会对包体积以及性能产生负面的影响。为了尽可能降低监控工具对线上用户体验的影响，我们提出了精准插桩的方案！因为结合对于线上问题的分析诉求来看，我们重点关注的是上层执行的业务函数，比如页面生命周期、业务消息等入口方法，以及底层那些可能耗时的业务函数。所以我们基于静态代码分析的基础能力，分析提取出带有耗时特征的函数来进行插桩，例如下面表格中带有锁关键字的函数、存在 Native &#x2F; IO 等调用的函数以及特别复杂的大方法等。在这个精准插桩的优化策略之下，大幅减少了约 90% 的插桩数量！</p></blockquote><table><thead><tr><th>函数特征</th><th>指令名称</th><th>说明</th></tr></thead><tbody><tr><td>锁</td><td>monitorenter &amp; monitorexit;<br>ACC_SYNCHRONIZED</td><td>Java 锁关键字</td></tr><tr><td>循环</td><td>goto</td><td>循环关键字，根据实际情况决定是否加入“疑似耗时操作”名单</td></tr><tr><td>特殊方法调用</td><td>InvokeVirtual;<br>InvokeSpecial;<br>InvokeStatic;<br>InvokeInterface;<br>InvokeDynamic;</td><td>存在Native、IO、线程、渲染等相关的方法调用</td></tr><tr><td>大方法</td><td>InvokeVirtual;<br>InvokeSpecial;<br>InvokeStatic;<br>InvokeInterface;<br>InvokeDynamic;</td><td>方法中调用方法数目超过20个</td></tr></tbody></table><p>针对大幅精简后堆栈信息太少的问题，字节使用了抓栈进行数据你和的方式进行补充。</p><h3 id="堆栈采样拟合"><a href="#堆栈采样拟合" class="headerlink" title="堆栈采样拟合"></a>堆栈采样拟合</h3><p>由于ASM的插桩严重影响运行的性能，因此目前有一种通过定时抓栈，然后进行数据拟合的方案实现方法耗时的采样。代表工具为西瓜视频的稳定性工具：<a href="https://blog.csdn.net/ByteDanceTech/article/details/119621240">西瓜视频稳定性治理体系建设三：Sliver 原理及实践</a></p><p>原理是参考<code>Debug.startMethodTracingSampling</code>的抓栈的代码。<code>Debug.startMethodTracingSampling</code>抓栈的缺点是效率低，因为抓栈的时候需要挂起所有的线程。因此Sliver通过自己实现对特定线程的抓栈，做到只挂起部分需要抓栈的线程即可。由于西瓜视频的Sliver未开源，因此如果想深入分析原理，可考虑参考如下：<a href="https://juejin.cn/post/7107137302043820039">Android 平台下的 Method Trace 实现及应用</a>，该大佬写了Demo工具来解释其原理：<a href="https://github.com/Knight-ZXW/Sliver?tab=readme-ov-file">Knight-ZXW&#x2F;Sliver</a></p><h3 id="Systrace"><a href="#Systrace" class="headerlink" title="Systrace"></a>Systrace</h3><p><a href="https://source.android.com/docs/core/tests/debug/systrace?hl=zh-cn">Systrace</a> 是Android sdk自带的性能分析工具，该工具汇集了Android 内核中的数据，例如 CPU 调度程序、磁盘活动和应用线程，帮助分析提升应用性能。具体如何使用Systrace可以参考上面的链接。</p><h3 id="Android-Profiler"><a href="#Android-Profiler" class="headerlink" title="Android Profiler"></a>Android Profiler</h3><p>该工具在Android studio自带，能够监控cpu占用、内存占用、流量、电量消耗指标。但是在进行启动分析的时候，该工具的性能等方面远不如上面说的那些工具，所以做启动优化的时候暂时可以忽略该工具。</p><h3 id="Perfetto"><a href="#Perfetto" class="headerlink" title="Perfetto"></a>Perfetto</h3><p> Perfetto是google从Android10开始引入的一个全新的平台级跟踪分析工具。适用于Android、Linux和Chrome的更加通用和复杂的用于性能检测和跟踪分析的生产级开源项目。在android系统中对性能分析是尤为重要的一部分，仅从logcat中进行时间分解太繁琐，android系统中可以通过trace来分析性能。</p><p>具体使用可参考：<a href="https://perfetto.dev/docs/tracing-101">Perfetto</a></p><h3 id="其他厂商的工具"><a href="#其他厂商的工具" class="headerlink" title="其他厂商的工具"></a>其他厂商的工具</h3><p>字节自研新一代性能分析工具 Rhea，未开源，但是思想可以参考。<a href="https://mp.weixin.qq.com/s?__biz=MzI1MzYzMjE0MQ==&mid=2247487720&idx=1&sn=4c1dc31b6201e420dcac49250b81055f">抖音 Android 性能优化系列：新一代全能型性能分析工具 Rhea</a></p><h2 id="线上监控与防劣化"><a href="#线上监控与防劣化" class="headerlink" title="线上监控与防劣化"></a>线上监控与防劣化</h2><p>线上监控启动耗时，为了尽可能的减少对线上性能的影响，上述的性能检测工具一般都不会跟线上包。在线上包中，我们可以通过手动预埋阶段性耗时检测点，来统计线上的性能指标。并且在线上指标发生劣化的时候有排查依据。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上便是在冷启动优化的时候所涉及到的一些知识架构。后续会对上面的指导思想进行详细的拆解与实践。</p><p>另外文中提到的性能监测工具在ANR、卡顿等优化上也是非常有用的，因此后续会详细介绍这些工具的使用、原理等相关内容。</p><h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul><li><a href="https://juejin.cn/post/7058080006022856735">抖音 Android 性能优化系列：启动优化之理论和工具篇</a></li><li><a href="https://www.51cto.com/article/764985.html">得物App安卓冷启动优化-Application篇</a></li><li><a href="https://github.com/iReaderAndroid/X2C/blob/master/README_CN.md">X2C</a></li><li><a href="https://juejin.cn/post/6844903975142047758">App流畅度优化：利用字节码插桩实现一个快速排查高耗时方法的工具</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzI1MzYzMjE0MQ==&mid=2247488182&idx=1&sn=6337f1b51d487057b162064c3e24c439">今日头条 ANR 优化实践系列 - 监控工具与分析思路</a></li><li><a href="https://blog.csdn.net/ByteDanceTech/article/details/119621240">西瓜视频稳定性治理体系建设三：Sliver 原理及实践</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 性能监控与优化 </category>
+          
+          <category> Android冷启动优化--启动优化指导思想 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 性能优化 </tag>
+            
+            <tag> 冷启动优化 </tag>
             
         </tags>
       
